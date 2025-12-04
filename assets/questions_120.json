@@ -1,0 +1,986 @@
+[
+  {
+    "id": 1,
+    "text": "I find it easy to start conversations with strangers.",
+    "mbti": {"E": 2.0, "I": -2.0},
+    "big5": {"extraversion": 2.0},
+    "enneagram": {"7": 1.0, "2": 1.0, "5": -1.0},
+    "raads": {"social_relatedness": -2.0}
+  },
+  {
+    "id": 2,
+    "text": "I find social situations exhausting and often need to withdraw to recharge.",
+    "mbti": {"I": 2.0, "E": -2.0},
+    "big5": {"extraversion": -2.0},
+    "enneagram": {"5": 2.0, "9": 1.0, "4": 1.0},
+    "raads": {"social_relatedness": 2.0}
+  },
+  {
+    "id": 3,
+    "text": "I struggle to understand sarcasm or reading 'between the lines' in conversation.",
+    "mbti": {"N": 2.0, "S": -2.0},
+    "big5": {"openness": -1.0},
+    "enneagram": {"5": 1.0, "6": 1.0},
+    "raads": {"language": 3.0, "social_relatedness": 1.0}
+  },
+  {
+    "id": 4,
+    "text": "I am often the life of the party.",
+    "mbti": {"E": 2.0, "I": -2.0},
+    "big5": {"extraversion": 2.5},
+    "enneagram": {"7": 2.0, "3": 1.5},
+    "raads": {"social_relatedness": -1.5}
+  },
+  {
+    "id": 5,
+    "text": "I prefer deep, one-on-one conversations over group activities.",
+    "mbti": {"I": 1.5, "N": 1.0},
+    "big5": {"extraversion": -1.0, "openness": 0.5},
+    "enneagram": {"4": 1.5, "5": 1.0},
+    "raads": {"social_relatedness": 0.5}
+  },
+  {
+    "id": 6,
+    "text": "I tend to mimic the facial expressions and gestures of others to fit in.",
+    "mbti": {"F": 1.0},
+    "big5": {"agreeableness": 1.0, "neuroticism": 2.0},
+    "enneagram": {"3": 1.5, "9": 1.0, "6": 1.0},
+    "raads": {"social_relatedness": 2.5}
+  },
+  {
+    "id": 7,
+    "text": "I spend a lot of time thinking about abstract concepts, theories, and the future.",
+    "mbti": {"N": 2.5, "S": -2.5},
+    "big5": {"openness": 2.5},
+    "enneagram": {"5": 1.5, "7": 1.0},
+    "raads": {"circumscribed_interests": 0.5}
+  },
+  {
+    "id": 8,
+    "text": "I prefer concrete facts and practical details over theories.",
+    "mbti": {"S": 2.5, "N": -2.5},
+    "big5": {"openness": -2.0},
+    "enneagram": {"1": 1.0, "6": 1.0, "8": 0.5},
+    "raads": {"circumscribed_interests": -0.5}
+  },
+  {
+    "id": 9,
+    "text": "I am extremely sensitive to loud noises, bright lights, or certain textures.",
+    "mbti": {"S": 2.0, "N": -2.0},
+    "big5": {"neuroticism": 1.0},
+    "enneagram": {"4": 0.5, "6": 1.0},
+    "raads": {"sensory_motor": 3.0}
+  },
+  {
+    "id": 10,
+    "text": "I have a vivid imagination and enjoy creative pursuits.",
+    "mbti": {"N": 2.0, "P": 1.0},
+    "big5": {"openness": 2.0},
+    "enneagram": {"4": 2.0, "7": 1.5},
+    "raads": {"circumscribed_interests": -0.5}
+  },
+  {
+    "id": 11,
+    "text": "I get so absorbed in my special interests that I forget to eat or sleep.",
+    "mbti": {"N": 1.0, "T": 1.0},
+    "big5": {"conscientiousness": -1.0},
+    "enneagram": {"5": 2.5},
+    "raads": {"circumscribed_interests": 3.0}
+  },
+  {
+    "id": 12,
+    "text": "I focus on the big picture rather than the details.",
+    "mbti": {"N": 2.0, "S": -2.0},
+    "big5": {"openness": 1.5},
+    "enneagram": {"8": 1.0, "7": 1.0},
+    "raads": {"circumscribed_interests": -1.0}
+  },
+  {
+    "id": 13,
+    "text": "I prioritize logic and efficiency over people's feelings when making decisions.",
+    "mbti": {"T": 2.5, "F": -2.5},
+    "big5": {"agreeableness": -2.0},
+    "enneagram": {"5": 1.5, "8": 1.5, "3": 1.0, "1": 1.0},
+    "raads": {"social_relatedness": 0.5}
+  },
+  {
+    "id": 14,
+    "text": "I am deeply empathetic and often absorb the emotions of those around me.",
+    "mbti": {"F": 2.5, "T": -2.5},
+    "big5": {"agreeableness": 2.0, "neuroticism": 1.5},
+    "enneagram": {"2": 2.0, "9": 1.5, "4": 1.5},
+    "raads": {"social_relatedness": -0.5}
+  },
+  {
+    "id": 15,
+    "text": "I value harmony and will avoid conflict to keep the peace.",
+    "mbti": {"F": 1.5},
+    "big5": {"agreeableness": 2.0, "neuroticism": 0.5},
+    "enneagram": {"9": 3.0, "2": 1.0, "6": 1.0},
+    "raads": {"social_relatedness": -0.5}
+  },
+  {
+    "id": 16,
+    "text": "People describe me as blunt or insensitive.",
+    "mbti": {"T": 2.0},
+    "big5": {"agreeableness": -2.0},
+    "enneagram": {"8": 2.0, "1": 1.0},
+    "raads": {"social_relatedness": 1.5}
+  },
+  {
+    "id": 17,
+    "text": "I make decisions based on my personal values and moral compass.",
+    "mbti": {"F": 2.0},
+    "big5": {"agreeableness": 1.0, "conscientiousness": 0.5},
+    "enneagram": {"1": 2.0, "4": 1.5},
+    "raads": {"social_relatedness": 0.0}
+  },
+  {
+    "id": 18,
+    "text": "I analyze problems objectively, detaching myself from the situation.",
+    "mbti": {"T": 2.0},
+    "big5": {"agreeableness": -0.5, "neuroticism": -1.0},
+    "enneagram": {"5": 2.5, "6": 1.0},
+    "raads": {"circumscribed_interests": 0.5}
+  },
+  {
+    "id": 19,
+    "text": "I get very upset if my daily routine is unexpectedly disturbed.",
+    "mbti": {"J": 2.0, "S": 1.0},
+    "big5": {"conscientiousness": 1.0, "neuroticism": 1.5},
+    "enneagram": {"1": 1.5, "6": 2.0},
+    "raads": {"circumscribed_interests": 3.0}
+  },
+  {
+    "id": 20,
+    "text": "I prefer to keep my options open rather than committing to a plan.",
+    "mbti": {"P": 2.5, "J": -2.5},
+    "big5": {"conscientiousness": -2.0},
+    "enneagram": {"7": 2.0, "9": 1.0},
+    "raads": {"circumscribed_interests": -1.0}
+  },
+  {
+    "id": 21,
+    "text": "I am always prepared and like to have a schedule.",
+    "mbti": {"J": 2.5, "P": -2.5},
+    "big5": {"conscientiousness": 2.5},
+    "enneagram": {"1": 2.0, "3": 1.5, "6": 1.0},
+    "raads": {"circumscribed_interests": 1.0}
+  },
+  {
+    "id": 22,
+    "text": "I leave my belongings around and often misplace things.",
+    "mbti": {"P": 2.0, "J": -2.0},
+    "big5": {"conscientiousness": -2.5},
+    "enneagram": {"7": 1.0, "9": 1.5},
+    "raads": {"sensory_motor": 0.5}
+  },
+  {
+    "id": 23,
+    "text": "I work hard to achieve high standards and perfection.",
+    "mbti": {"J": 1.5},
+    "big5": {"conscientiousness": 2.5},
+    "enneagram": {"1": 3.0, "3": 2.0},
+    "raads": {"circumscribed_interests": 0.5}
+  },
+  {
+    "id": 24,
+    "text": "I often procrastinate until the last minute.",
+    "mbti": {"P": 2.0},
+    "big5": {"conscientiousness": -2.0},
+    "enneagram": {"9": 2.0, "7": 1.0},
+    "raads": {"circumscribed_interests": 0.0}
+  },
+  {
+    "id": 25,
+    "text": "I worry about things more than most people do.",
+    "mbti": {"J": 0.5},
+    "big5": {"neuroticism": 3.0},
+    "enneagram": {"6": 3.0, "4": 1.0},
+    "raads": {"social_relatedness": 0.5}
+  },
+  {
+    "id": 26,
+    "text": "I rarely feel anxious or depressed.",
+    "mbti": {"P": 0.5},
+    "big5": {"neuroticism": -3.0},
+    "enneagram": {"9": 1.0, "7": 1.0, "8": 1.0},
+    "raads": {"social_relatedness": 0.0}
+  },
+  {
+    "id": 27,
+    "text": "My mood changes drastically throughout the day.",
+    "mbti": {"F": 1.0},
+    "big5": {"neuroticism": 2.5},
+    "enneagram": {"4": 2.5},
+    "raads": {"sensory_motor": 1.0}
+  },
+  {
+    "id": 28,
+    "text": "I remain calm under pressure.",
+    "mbti": {"T": 1.0},
+    "big5": {"neuroticism": -2.0, "conscientiousness": 1.0},
+    "enneagram": {"8": 1.5, "9": 1.5, "5": 1.0},
+    "raads": {"social_relatedness": 0.0}
+  },
+  {
+    "id": 29,
+    "text": "I feel threatened easily.",
+    "mbti": {"F": 0.5},
+    "big5": {"neuroticism": 2.0},
+    "enneagram": {"6": 2.5},
+    "raads": {"social_relatedness": 1.0}
+  },
+  {
+    "id": 30,
+    "text": "I am comfortable with myself.",
+    "mbti": {"E": 0.5},
+    "big5": {"neuroticism": -2.0},
+    "enneagram": {"9": 1.5, "7": 1.0},
+    "raads": {"social_relatedness": -0.5}
+  },
+  {
+    "id": 31,
+    "text": "I have a strong need to be helpful to others to feel loved.",
+    "mbti": {"F": 1.5},
+    "big5": {"agreeableness": 2.0},
+    "enneagram": {"2": 3.0},
+    "raads": {"social_relatedness": -1.0}
+  },
+  {
+    "id": 32,
+    "text": "I am driven by a need to be successful and admired.",
+    "mbti": {"E": 1.0, "J": 1.0},
+    "big5": {"extraversion": 1.0, "conscientiousness": 1.0},
+    "enneagram": {"3": 3.0},
+    "raads": {"social_relatedness": -0.5}
+  },
+  {
+    "id": 33,
+    "text": "I often feel different or unique compared to others.",
+    "mbti": {"N": 1.0, "F": 1.0},
+    "big5": {"openness": 1.0, "neuroticism": 1.0},
+    "enneagram": {"4": 3.0},
+    "raads": {"social_relatedness": 1.5}
+  },
+  {
+    "id": 34,
+    "text": "I prepare for worst-case scenarios.",
+    "mbti": {"J": 1.0},
+    "big5": {"neuroticism": 1.5, "conscientiousness": 1.0},
+    "enneagram": {"6": 3.0},
+    "raads": {"circumscribed_interests": 0.5}
+  },
+  {
+    "id": 35,
+    "text": "I fear being deprived or in pain, so I seek new experiences.",
+    "mbti": {"P": 1.5, "E": 1.0},
+    "big5": {"openness": 2.0, "extraversion": 1.5},
+    "enneagram": {"7": 3.0},
+    "raads": {"sensory_motor": 0.5}
+  },
+  {
+    "id": 36,
+    "text": "I have a need to be strong and in control.",
+    "mbti": {"T": 1.5, "J": 1.0},
+    "big5": {"agreeableness": -1.5, "extraversion": 1.0},
+    "enneagram": {"8": 3.0},
+    "raads": {"social_relatedness": 0.5}
+  },
+  {
+    "id": 37,
+    "text": "I avoid conflict and just want peace of mind.",
+    "mbti": {"P": 1.0},
+    "big5": {"agreeableness": 1.5, "neuroticism": -1.0},
+    "enneagram": {"9": 3.0},
+    "raads": {"social_relatedness": -0.5}
+  },
+  {
+    "id": 38,
+    "text": "I take things literally and have trouble understanding idioms (e.g., 'raining cats and dogs').",
+    "mbti": {"S": 2.5, "N": -2.5},
+    "big5": {"openness": -1.0},
+    "enneagram": {"5": 1.0},
+    "raads": {"language": 3.0}
+  },
+  {
+    "id": 39,
+    "text": "I have a monotone voice or speak in an unusual rhythm.",
+    "mbti": {"T": 0.5},
+    "big5": {"extraversion": -1.0},
+    "enneagram": {"5": 1.0},
+    "raads": {"language": 3.0}
+  },
+  {
+    "id": 40,
+    "text": "I am clumsy and have poor motor coordination.",
+    "mbti": {},
+    "big5": {"conscientiousness": -0.5},
+    "enneagram": {"4": 0.5},
+    "raads": {"sensory_motor": 3.0}
+  },
+  {
+    "id": 41,
+    "text": "I notice small sounds that others do not hear.",
+    "mbti": {"S": 1.5},
+    "big5": {"neuroticism": 1.0},
+    "enneagram": {"6": 1.0},
+    "raads": {"sensory_motor": 2.5}
+  },
+  {
+    "id": 42,
+    "text": "I prefer to do the same things in the same way every day.",
+    "mbti": {"S": 2.0, "J": 2.0},
+    "big5": {"openness": -2.5, "conscientiousness": 1.0},
+    "enneagram": {"9": 1.0, "1": 1.0, "6": 1.0},
+    "raads": {"circumscribed_interests": 3.0}
+  },
+  {
+    "id": 43,
+    "text": "I find it difficult to know how to act in social situations unless I have been taught the specific rules.",
+    "mbti": {"T": 1.0, "I": 1.0},
+    "big5": {"extraversion": -1.5},
+    "enneagram": {"5": 2.0, "6": 1.5},
+    "raads": {"social_relatedness": 3.0}
+  },
+  {
+    "id": 44,
+    "text": "I have a very strong sense of justice and fairness.",
+    "mbti": {"F": 1.0, "J": 1.0},
+    "big5": {"agreeableness": 0.5, "conscientiousness": 1.0},
+    "enneagram": {"1": 2.5, "8": 1.5, "6": 1.0},
+    "raads": {"circumscribed_interests": 1.0}
+  },
+  {
+    "id": 45,
+    "text": "I tend to analyze my own emotions intellectually rather than feeling them.",
+    "mbti": {"T": 2.0, "N": 1.0},
+    "big5": {"neuroticism": 0.5},
+    "enneagram": {"5": 2.5},
+    "raads": {"social_relatedness": 1.0}
+  },
+  {
+    "id": 46,
+    "text": "I act on impulse without thinking of the consequences.",
+    "mbti": {"P": 2.0, "S": 1.0},
+    "big5": {"conscientiousness": -2.5, "extraversion": 1.0},
+    "enneagram": {"7": 2.0, "8": 1.0},
+    "raads": {"sensory_motor": 0.5}
+  },
+  {
+    "id": 47,
+    "text": "I feel like I have to wear a 'mask' when I am in public.",
+    "mbti": {"I": 1.5, "F": 1.0},
+    "big5": {"neuroticism": 2.0},
+    "enneagram": {"4": 1.5, "3": 1.5},
+    "raads": {"social_relatedness": 3.0}
+  },
+  {
+    "id": 48,
+    "text": "I have trouble recognizing faces.",
+    "mbti": {"N": 0.5},
+    "big5": {"openness": 0.0},
+    "enneagram": {"5": 0.5},
+    "raads": {"sensory_motor": 2.0}
+  },
+  {
+    "id": 49,
+    "text": "I dislike small talk and prefer to talk about my specific interests immediately.",
+    "mbti": {"I": 1.0, "T": 1.0},
+    "big5": {"agreeableness": -1.0},
+    "enneagram": {"5": 2.0},
+    "raads": {"circumscribed_interests": 3.0, "social_relatedness": 1.0}
+  },
+  {
+    "id": 50,
+    "text": "I am often told that I am too critical of others.",
+    "mbti": {"T": 2.0, "J": 1.0},
+    "big5": {"agreeableness": -2.5},
+    "enneagram": {"1": 2.5, "8": 1.0},
+    "raads": {"social_relatedness": 1.0}
+  },
+  {
+    "id": 51,
+    "text": "I find it difficult to maintain eye contact during conversations.",
+    "mbti": {"I": 1.5, "S": 0.5},
+    "big5": {"extraversion": -1.0},
+    "enneagram": {"5": 2.0, "9": 1.0},
+    "raads": {"social_relatedness": 2.5}
+  },
+  {
+    "id": 52,
+    "text": "I enjoy planning my day in detail and sticking to the schedule.",
+    "mbti": {"J": 2.0, "S": 1.0},
+    "big5": {"conscientiousness": 2.0},
+    "enneagram": {"1": 2.0, "6": 1.0},
+    "raads": {"circumscribed_interests": 1.5}
+  },
+  {
+    "id": 53,
+    "text": "I feel energized after spending time with a large group of people.",
+    "mbti": {"E": 2.5, "I": -2.5},
+    "big5": {"extraversion": 2.5},
+    "enneagram": {"7": 2.0, "3": 1.0},
+    "raads": {"social_relatedness": -2.0}
+  },
+  {
+    "id": 54,
+    "text": "I often notice patterns that others miss.",
+    "mbti": {"N": 1.5, "T": 1.0},
+    "big5": {"openness": 1.5},
+    "enneagram": {"5": 2.0},
+    "raads": {"circumscribed_interests": 1.0}
+  },
+  {
+    "id": 55,
+    "text": "I prefer written communication over phone calls.",
+    "mbti": {"I": 1.5, "T": 0.5},
+    "big5": {"extraversion": -1.0},
+    "enneagram": {"5": 1.5, "9": 1.0},
+    "raads": {"social_relatedness": 2.0, "language": 1.0}
+  },
+  {
+    "id": 56,
+    "text": "I get overwhelmed in shopping malls or crowded places.",
+    "mbti": {"I": 1.0, "S": 1.0},
+    "big5": {"neuroticism": 1.5, "extraversion": -1.5},
+    "enneagram": {"4": 1.0, "6": 1.5},
+    "raads": {"sensory_motor": 2.5, "social_relatedness": 1.5}
+  },
+  {
+    "id": 57,
+    "text": "I enjoy debating ideas and challenging others' perspectives.",
+    "mbti": {"T": 2.0, "E": 1.0},
+    "big5": {"openness": 1.5, "agreeableness": -1.5},
+    "enneagram": {"8": 2.0, "1": 1.0, "5": 1.0},
+    "raads": {"social_relatedness": 0.5}
+  },
+  {
+    "id": 58,
+    "text": "I am often the one to comfort others when they're upset.",
+    "mbti": {"F": 2.5, "E": 1.0},
+    "big5": {"agreeableness": 2.5},
+    "enneagram": {"2": 2.5, "9": 1.5},
+    "raads": {"social_relatedness": -1.0}
+  },
+  {
+    "id": 59,
+    "text": "I have difficulty understanding jokes or humor.",
+    "mbti": {"T": 1.5, "S": 1.0},
+    "big5": {"openness": -1.0},
+    "enneagram": {"5": 1.5, "1": 1.0},
+    "raads": {"language": 3.0, "social_relatedness": 1.5}
+  },
+  {
+    "id": 60,
+    "text": "I enjoy taking risks and trying new things without planning.",
+    "mbti": {"P": 2.5, "E": 1.5},
+    "big5": {"openness": 2.0, "conscientiousness": -2.0},
+    "enneagram": {"7": 2.5, "8": 1.0},
+    "raads": {"circumscribed_interests": -1.5}
+  },
+  {
+    "id": 61,
+    "text": "I need clear instructions and specific guidelines to complete tasks.",
+    "mbti": {"S": 1.5, "J": 1.5},
+    "big5": {"openness": -1.5, "conscientiousness": 1.0},
+    "enneagram": {"6": 2.0, "1": 1.5},
+    "raads": {"circumscribed_interests": 2.0}
+  },
+  {
+    "id": 62,
+    "text": "I am skilled at reading between the lines in social situations.",
+    "mbti": {"F": 1.5, "N": 1.0},
+    "big5": {"openness": 1.0},
+    "enneagram": {"2": 1.5, "9": 1.0},
+    "raads": {"social_relatedness": -2.5}
+  },
+  {
+    "id": 63,
+    "text": "I have a few very close friends rather than many acquaintances.",
+    "mbti": {"I": 2.0, "F": 0.5},
+    "big5": {"extraversion": -1.5},
+    "enneagram": {"4": 1.5, "5": 1.0},
+    "raads": {"social_relatedness": 1.0}
+  },
+  {
+    "id": 64,
+    "text": "I enjoy learning about new theories even if they have no practical application.",
+    "mbti": {"N": 2.5, "T": 1.5},
+    "big5": {"openness": 2.5},
+    "enneagram": {"5": 2.5},
+    "raads": {"circumscribed_interests": 1.0}
+  },
+  {
+    "id": 65,
+    "text": "I find it easy to adapt to changes in plans.",
+    "mbti": {"P": 2.0, "N": 1.0},
+    "big5": {"neuroticism": -1.0, "openness": 1.5},
+    "enneagram": {"7": 2.0, "9": 1.5},
+    "raads": {"circumscribed_interests": -2.0}
+  },
+  {
+    "id": 66,
+    "text": "I often think about how things could be improved.",
+    "mbti": {"N": 1.5, "T": 1.0},
+    "big5": {"openness": 1.5, "conscientiousness": 0.5},
+    "enneagram": {"1": 2.0, "5": 1.0},
+    "raads": {"circumscribed_interests": 0.5}
+  },
+  {
+    "id": 67,
+    "text": "I prefer to work independently rather than in a team.",
+    "mbti": {"I": 2.0, "T": 1.0},
+    "big5": {"extraversion": -2.0, "agreeableness": -0.5},
+    "enneagram": {"5": 2.0, "8": 1.0},
+    "raads": {"social_relatedness": 1.5}
+  },
+  {
+    "id": 68,
+    "text": "I am sensitive to criticism and take it personally.",
+    "mbti": {"F": 1.5},
+    "big5": {"neuroticism": 2.0},
+    "enneagram": {"4": 2.0, "6": 1.5},
+    "raads": {"social_relatedness": 0.5}
+  },
+  {
+    "id": 69,
+    "text": "I enjoy organizing things and creating systems.",
+    "mbti": {"J": 2.0, "S": 1.0},
+    "big5": {"conscientiousness": 2.0},
+    "enneagram": {"1": 2.0, "3": 1.0},
+    "raads": {"circumscribed_interests": 1.0}
+  },
+  {
+    "id": 70,
+    "text": "I often forget to respond to messages or emails.",
+    "mbti": {"P": 1.5, "N": 1.0},
+    "big5": {"conscientiousness": -2.0},
+    "enneagram": {"7": 1.5, "9": 1.5},
+    "raads": {"social_relatedness": 1.0}
+  },
+  {
+    "id": 71,
+    "text": "I can focus intensely on a task for hours without noticing time passing.",
+    "mbti": {"N": 1.5, "J": 1.0},
+    "big5": {"conscientiousness": 1.0},
+    "enneagram": {"5": 2.0, "1": 1.5},
+    "raads": {"circumscribed_interests": 2.5}
+  },
+  {
+    "id": 72,
+    "text": "I enjoy public speaking and being in the spotlight.",
+    "mbti": {"E": 2.5, "J": 1.0},
+    "big5": {"extraversion": 2.5},
+    "enneagram": {"3": 2.5, "7": 1.5},
+    "raads": {"social_relatedness": -2.0}
+  },
+  {
+    "id": 73,
+    "text": "I have difficulty understanding why people get upset over small things.",
+    "mbti": {"T": 2.0, "S": 0.5},
+    "big5": {"agreeableness": -2.0},
+    "enneagram": {"5": 1.5, "8": 1.5},
+    "raads": {"social_relatedness": 2.0}
+  },
+  {
+    "id": 74,
+    "text": "I need a lot of alone time to feel balanced.",
+    "mbti": {"I": 2.5, "N": 1.0},
+    "big5": {"extraversion": -2.5},
+    "enneagram": {"4": 1.5, "5": 2.0, "9": 1.5},
+    "raads": {"social_relatedness": 1.5}
+  },
+  {
+    "id": 75,
+    "text": "I enjoy competitive activities and strive to win.",
+    "mbti": {"T": 1.5, "E": 1.5},
+    "big5": {"extraversion": 1.5, "agreeableness": -1.0},
+    "enneagram": {"3": 2.0, "8": 2.0},
+    "raads": {"social_relatedness": -0.5}
+  },
+  {
+    "id": 76,
+    "text": "I often think about the meaning of life and my purpose.",
+    "mbti": {"N": 2.0, "F": 1.5},
+    "big5": {"openness": 2.0, "neuroticism": 1.0},
+    "enneagram": {"4": 2.5, "5": 1.0},
+    "raads": {"circumscribed_interests": 0.5}
+  },
+  {
+    "id": 77,
+    "text": "I prefer to follow established procedures rather than create my own methods.",
+    "mbti": {"S": 2.0, "J": 1.5},
+    "big5": {"openness": -2.0, "conscientiousness": 1.5},
+    "enneagram": {"6": 2.0, "1": 2.0},
+    "raads": {"circumscribed_interests": 2.0}
+  },
+  {
+    "id": 78,
+    "text": "I can easily tell when someone is lying or being insincere.",
+    "mbti": {"N": 1.5, "F": 1.0},
+    "big5": {"openness": 1.0},
+    "enneagram": {"6": 1.5, "8": 1.0},
+    "raads": {"social_relatedness": -1.5}
+  },
+  {
+    "id": 79,
+    "text": "I enjoy repetitive tasks that allow me to enter a flow state.",
+    "mbti": {"S": 1.5, "J": 1.5},
+    "big5": {"neuroticism": -1.0, "conscientiousness": 1.0},
+    "enneagram": {"9": 1.5, "1": 1.5},
+    "raads": {"circumscribed_interests": 2.5}
+  },
+  {
+    "id": 80,
+    "text": "I feel anxious when I don't know what will happen next.",
+    "mbti": {"J": 1.5, "S": 1.0},
+    "big5": {"neuroticism": 2.0, "openness": -1.0},
+    "enneagram": {"6": 2.5, "1": 1.0},
+    "raads": {"circumscribed_interests": 1.5}
+  },
+  {
+    "id": 81,
+    "text": "I often take on too much responsibility because I want to feel needed.",
+    "mbti": {"F": 1.5, "J": 1.0},
+    "big5": {"agreeableness": 2.0, "extraversion": 1.0},
+    "enneagram": {"2": 3.0, "8": 0.5, "6": 1.0},
+    "raads": {"social_relatedness": -1.0}
+  },
+  {
+    "id": 82,
+    "text": "I instinctively take charge of situations when others are indecisive.",
+    "mbti": {"E": 1.5, "T": 1.5, "J": 2.0},
+    "big5": {"extraversion": 2.0, "conscientiousness": 1.5},
+    "enneagram": {"8": 3.0, "3": 1.5, "1": 1.0},
+    "raads": {"social_relatedness": -0.5}
+  },
+  {
+    "id": 83,
+    "text": "I am deeply afraid of being worthless or a failure.",
+    "mbti": {"J": 1.0, "E": 1.0},
+    "big5": {"neuroticism": 1.5, "conscientiousness": 1.5},
+    "enneagram": {"3": 3.0, "4": 0.5},
+    "raads": {"social_relatedness": 0.0}
+  },
+  {
+    "id": 84,
+    "text": "Certain textures of clothing or food feel physically painful to me.",
+    "mbti": {"S": 1.0},
+    "big5": {"neuroticism": 1.0},
+    "enneagram": {"4": 0.5, "6": 0.5},
+    "raads": {"sensory_motor": 3.0}
+  },
+  {
+    "id": 85,
+    "text": "I re-read or re-watch the same media repeatedly because it feels safe.",
+    "mbti": {"S": 1.5, "J": 1.0},
+    "big5": {"openness": -1.5, "neuroticism": 1.0},
+    "enneagram": {"9": 2.0, "6": 2.0, "5": 1.0},
+    "raads": {"circumscribed_interests": 2.5}
+  },
+  {
+    "id": 86,
+    "text": "I often rehearse conversations in my head before they happen.",
+    "mbti": {"I": 1.5, "J": 1.0},
+    "big5": {"neuroticism": 1.5},
+    "enneagram": {"6": 2.0, "3": 1.0, "1": 1.0},
+    "raads": {"social_relatedness": 2.0, "language": 1.0}
+  },
+  {
+    "id": 87,
+    "text": "I struggle to identify my own physical needs (hunger, thirst, bathroom) until it is urgent.",
+    "mbti": {"N": 2.0, "S": -2.0},
+    "big5": {"conscientiousness": -1.5},
+    "enneagram": {"5": 2.0, "9": 1.5},
+    "raads": {"sensory_motor": 2.5}
+  },
+  {
+    "id": 88,
+    "text": "I find comfort in categorizing information or collecting specific items.",
+    "mbti": {"T": 1.0, "S": 1.0},
+    "big5": {"conscientiousness": 1.0},
+    "enneagram": {"5": 2.0, "6": 1.0},
+    "raads": {"circumscribed_interests": 2.5}
+  },
+  {
+    "id": 89,
+    "text": "I tend to mirror the personality of whoever I am with.",
+    "mbti": {"F": 1.5, "P": 1.0},
+    "big5": {"agreeableness": 1.5, "neuroticism": 1.0},
+    "enneagram": {"9": 2.5, "3": 2.0, "2": 1.0},
+    "raads": {"social_relatedness": 2.0}
+  },
+  {
+    "id": 90,
+    "text": "I express my love by doing practical tasks for others.",
+    "mbti": {"S": 1.5, "J": 1.5},
+    "big5": {"agreeableness": 2.0, "conscientiousness": 1.0},
+    "enneagram": {"2": 2.0, "1": 1.5, "8": 0.5},
+    "raads": {"social_relatedness": -1.0}
+  },
+  {
+    "id": 91,
+    "text": "I have a hard time stopping a task once I have started, even if I am exhausted.",
+    "mbti": {"J": 2.0},
+    "big5": {"conscientiousness": 2.0, "neuroticism": 0.5},
+    "enneagram": {"1": 2.0, "3": 2.0},
+    "raads": {"circumscribed_interests": 1.5}
+  },
+  {
+    "id": 92,
+    "text": "I am often told that I talk too loud or too soft without realizing it.",
+    "mbti": {"N": 0.5},
+    "big5": {"extraversion": 0.5},
+    "enneagram": {"7": 1.0, "8": 0.5},
+    "raads": {"sensory_motor": 2.5, "social_relatedness": 1.0}
+  },
+  {
+    "id": 93,
+    "text": "I dislike authority and hate being told what to do.",
+    "mbti": {"P": 1.5, "T": 1.0},
+    "big5": {"agreeableness": -1.5, "openness": 1.0},
+    "enneagram": {"8": 3.0, "6": -1.0, "4": 1.0},
+    "raads": {"social_relatedness": 0.5}
+  },
+  {
+    "id": 94,
+    "text": "I adapt easily to new environments and social groups.",
+    "mbti": {"E": 2.0, "P": 1.5},
+    "big5": {"extraversion": 2.0, "openness": 1.5},
+    "enneagram": {"3": 2.0, "7": 2.0, "9": 1.0},
+    "raads": {"social_relatedness": -3.0}
+  },
+  {
+    "id": 95,
+    "text": "I often rock back and forth or tap my fingers to calm down.",
+    "mbti": {"I": 0.5},
+    "big5": {"neuroticism": 1.0},
+    "enneagram": {"6": 1.0, "5": 0.5},
+    "raads": {"sensory_motor": 3.0}
+  },
+  {
+    "id": 96,
+    "text": "I place a high value on aesthetics, beauty, and authenticity.",
+    "mbti": {"F": 1.5, "N": 1.0},
+    "big5": {"openness": 2.5},
+    "enneagram": {"4": 3.0},
+    "raads": {"sensory_motor": 0.5}
+  },
+  {
+    "id": 97,
+    "text": "I prefer to observe the sidelines before joining a group activity.",
+    "mbti": {"I": 2.0, "P": 1.0},
+    "big5": {"extraversion": -1.5},
+    "enneagram": {"5": 2.0, "9": 1.5},
+    "raads": {"social_relatedness": 1.0}
+  },
+  {
+    "id": 98,
+    "text": "I am prone to sudden outbursts of anger when my boundaries are crossed.",
+    "mbti": {"F": 1.0, "T": 0.5},
+    "big5": {"neuroticism": 1.5, "agreeableness": -1.0},
+    "enneagram": {"8": 2.5, "1": 1.0, "4": 1.0},
+    "raads": {"social_relatedness": 0.5}
+  },
+  {
+    "id": 99,
+    "text": "I find it exhausting to maintain eye contact.",
+    "mbti": {"I": 1.0},
+    "big5": {"neuroticism": 1.0, "extraversion": -0.5},
+    "enneagram": {"5": 1.5, "9": 1.0},
+    "raads": {"social_relatedness": 3.0}
+  },
+  {
+    "id": 100,
+    "text": "I am highly competitive and hate losing.",
+    "mbti": {"T": 1.5, "E": 1.0},
+    "big5": {"agreeableness": -1.5, "conscientiousness": 1.0},
+    "enneagram": {"3": 2.5, "8": 2.0},
+    "raads": {"social_relatedness": -0.5}
+  },
+  {
+    "id": 101,
+    "text": "I often feel like I am 'performing' my life rather than living it.",
+    "mbti": {"F": 1.0},
+    "big5": {"neuroticism": 1.5},
+    "enneagram": {"3": 2.5, "4": 1.5},
+    "raads": {"social_relatedness": 2.0}
+  },
+  {
+    "id": 102,
+    "text": "I have a very specific routine for my morning/evening that cannot be changed.",
+    "mbti": {"J": 2.5, "S": 1.5},
+    "big5": {"conscientiousness": 2.0, "openness": -1.5},
+    "enneagram": {"1": 2.0, "6": 1.5},
+    "raads": {"circumscribed_interests": 2.5}
+  },
+  {
+    "id": 103,
+    "text": "I am often the person who plans the logistics for group trips.",
+    "mbti": {"J": 2.5, "T": 1.0},
+    "big5": {"conscientiousness": 2.5, "extraversion": 0.5},
+    "enneagram": {"6": 2.0, "1": 1.5, "8": 1.0},
+    "raads": {"social_relatedness": -1.0}
+  },
+  {
+    "id": 104,
+    "text": "I struggle to understand why people play 'mind games' instead of being direct.",
+    "mbti": {"T": 2.0, "S": 1.0},
+    "big5": {"agreeableness": -1.0},
+    "enneagram": {"8": 2.0, "1": 1.5, "5": 1.0},
+    "raads": {"social_relatedness": 2.5}
+  },
+  {
+    "id": 105,
+    "text": "I often sacrifice my own needs to ensure others are happy.",
+    "mbti": {"F": 2.5},
+    "big5": {"agreeableness": 3.0},
+    "enneagram": {"2": 3.0, "9": 2.0},
+    "raads": {"social_relatedness": -1.0}
+  },
+  {
+    "id": 106,
+    "text": "I am fascinated by dates, numbers, or historical timelines.",
+    "mbti": {"T": 1.5, "S": 1.0},
+    "big5": {"openness": 0.5},
+    "enneagram": {"5": 2.0},
+    "raads": {"circumscribed_interests": 3.0}
+  },
+  {
+    "id": 107,
+    "text": "I feel a strong need to protect the weak or innocent.",
+    "mbti": {"F": 2.0, "J": 1.0},
+    "big5": {"agreeableness": 1.5},
+    "enneagram": {"8": 2.5, "2": 1.5, "1": 1.5},
+    "raads": {"social_relatedness": -0.5}
+  },
+  {
+    "id": 108,
+    "text": "I frequently drift off into daydreams during conversations.",
+    "mbti": {"N": 2.5, "P": 1.5},
+    "big5": {"conscientiousness": -1.5, "openness": 2.0},
+    "enneagram": {"9": 2.0, "4": 1.5, "7": 1.0},
+    "raads": {"circumscribed_interests": 1.0}
+  },
+  {
+    "id": 109,
+    "text": "I am extremely loyal to my group or community.",
+    "mbti": {"S": 1.5, "J": 1.5},
+    "big5": {"agreeableness": 1.5, "conscientiousness": 1.5},
+    "enneagram": {"6": 3.0, "8": 1.0},
+    "raads": {"social_relatedness": -0.5}
+  },
+  {
+    "id": 110,
+    "text": "I prefer to learn by doing rather than by reading instructions.",
+    "mbti": {"S": 2.0, "P": 1.5},
+    "big5": {"openness": -0.5},
+    "enneagram": {"7": 1.5, "8": 1.0},
+    "raads": {"circumscribed_interests": -0.5}
+  },
+  {
+    "id": 111,
+    "text": "I get irritated when people walk too slowly or talk too slowly.",
+    "mbti": {"T": 1.5, "J": 1.0},
+    "big5": {"agreeableness": -1.5, "neuroticism": 1.0},
+    "enneagram": {"8": 2.0, "3": 2.0, "1": 1.0},
+    "raads": {"social_relatedness": 0.5}
+  },
+  {
+    "id": 112,
+    "text": "I have difficulty telling if someone is flirting with me.",
+    "mbti": {"T": 1.5, "I": 1.0},
+    "big5": {"extraversion": -1.0},
+    "enneagram": {"5": 1.5, "9": 1.0},
+    "raads": {"social_relatedness": 2.5}
+  },
+  {
+    "id": 113,
+    "text": "I enjoy abstract art and ambiguous endings in movies.",
+    "mbti": {"N": 2.5, "P": 1.0},
+    "big5": {"openness": 3.0},
+    "enneagram": {"4": 2.0, "5": 1.0},
+    "raads": {"circumscribed_interests": -1.0}
+  },
+  {
+    "id": 114,
+    "text": "I am very conscious of my social status and reputation.",
+    "mbti": {"E": 1.5, "J": 1.0},
+    "big5": {"extraversion": 1.5, "conscientiousness": 1.0},
+    "enneagram": {"3": 3.0, "2": 1.0},
+    "raads": {"social_relatedness": -1.5}
+  },
+  {
+    "id": 115,
+    "text": "I feel a need to correct errors whenever I see them.",
+    "mbti": {"T": 1.5, "J": 2.0},
+    "big5": {"conscientiousness": 2.0, "agreeableness": -1.0},
+    "enneagram": {"1": 3.0, "5": 1.0, "6": 1.0},
+    "raads": {"circumscribed_interests": 1.0}
+  },
+  {
+    "id": 116,
+    "text": "I struggle to make phone calls to strangers.",
+    "mbti": {"I": 1.5, "F": 0.5},
+    "big5": {"neuroticism": 2.0, "extraversion": -1.5},
+    "enneagram": {"9": 1.5, "6": 1.5},
+    "raads": {"social_relatedness": 1.0}
+  },
+  {
+    "id": 117,
+    "text": "I am often the 'therapist' friend for others.",
+    "mbti": {"F": 2.5, "N": 1.0},
+    "big5": {"agreeableness": 2.5},
+    "enneagram": {"2": 2.5, "9": 1.5, "4": 1.0},
+    "raads": {"social_relatedness": -1.5}
+  },
+  {
+    "id": 118,
+    "text": "I prefer nonfiction and documentaries over fiction.",
+    "mbti": {"T": 1.5, "S": 1.0},
+    "big5": {"openness": -1.0},
+    "enneagram": {"5": 2.0, "6": 1.0},
+    "raads": {"circumscribed_interests": 1.0}
+  },
+  {
+    "id": 119,
+    "text": "I often feel overwhelmed by too many choices.",
+    "mbti": {"J": 1.0},
+    "big5": {"neuroticism": 1.5},
+    "enneagram": {"6": 2.5, "9": 2.0},
+    "raads": {"circumscribed_interests": 0.5}
+  },
+  {
+    "id": 120,
+    "text": "I have a very high pain tolerance.",
+    "mbti": {"S": 1.0},
+    "big5": {"neuroticism": -1.0},
+    "enneagram": {"8": 1.5},
+    "raads": {"sensory_motor": 1.5}
+  },
+  {
+    "id": 121,
+    "text": "I tend to catastrophize when things go wrong.",
+    "mbti": {"F": 1.0},
+    "big5": {"neuroticism": 2.5},
+    "enneagram": {"6": 3.0, "4": 1.5},
+    "raads": {"social_relatedness": 0.5}
+  },
+  {
+    "id": 122,
+    "text": "I am energetic and always looking for the next adventure.",
+    "mbti": {"E": 2.0, "P": 2.0},
+    "big5": {"extraversion": 2.5, "openness": 2.0},
+    "enneagram": {"7": 3.0, "8": 1.0},
+    "raads": {"sensory_motor": 0.5}
+  },
+  {
+    "id": 123,
+    "text": "I can focus on my special interest for hours, forgetting to eat.",
+    "mbti": {"N": 1.0, "T": 1.0},
+    "big5": {"conscientiousness": 1.0},
+    "enneagram": {"5": 2.5, "1": 1.5},
+    "raads": {"circumscribed_interests": 3.0}
+  }
+]
