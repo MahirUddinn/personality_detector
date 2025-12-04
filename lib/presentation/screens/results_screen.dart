@@ -32,7 +32,7 @@ class ResultsScreen extends StatelessWidget {
                   const SizedBox(height: 20),
                   _buildRaadsResult(),
                   const SizedBox(height: 20),
-                  _buildRaadsSummaryCard(), // NEW
+                  _buildRaadsSummaryCard(),
                   const SizedBox(height: 40),
                   _buildShareButton(context),
                 ]),
@@ -43,8 +43,6 @@ class ResultsScreen extends StatelessWidget {
       ),
     );
   }
-
-  // ---------------- HEADER ----------------
 
   Widget _buildHeader() {
     return SliverAppBar(
@@ -77,7 +75,7 @@ class ResultsScreen extends StatelessWidget {
                   'Your Personality Analysis',
                   style: TextStyle(
                     fontSize: 16,
-                    color: Colors.white.withOpacity(0.9),
+                    color: Colors.white.withAlpha(230),
                   ),
                 ),
               ],
@@ -87,8 +85,6 @@ class ResultsScreen extends StatelessWidget {
       ),
     );
   }
-
-  // ---------------- SECTIONS ----------------
 
   Widget _buildMbtiResult() {
     return _card(
@@ -100,8 +96,8 @@ class ResultsScreen extends StatelessWidget {
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              const Color(0xFF6C63FF).withOpacity(0.1),
-              const Color(0xFF4A44C6).withOpacity(0.1),
+              const Color(0xFF6C63FF).withAlpha(26),
+              const Color(0xFF4A44C6).withAlpha(26),
             ],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
@@ -151,8 +147,8 @@ class ResultsScreen extends StatelessWidget {
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              Colors.purple.withOpacity(0.1),
-              Colors.deepPurple.withOpacity(0.1),
+              Colors.purple.withAlpha(26),
+              Colors.deepPurple.withAlpha(26),
             ],
           ),
           borderRadius: BorderRadius.circular(16),
@@ -190,8 +186,6 @@ class ResultsScreen extends StatelessWidget {
     );
   }
 
-  // ---------------- RAADS FULL SECTION ----------------
-
   Widget _buildRaadsResult() {
     return _card(
       icon: Icons.health_and_safety,
@@ -207,7 +201,6 @@ class ResultsScreen extends StatelessWidget {
     );
   }
 
-  /// NEW — Raw RAADS Score + Interpretation
   Widget _buildRaadsSummaryCard() {
     return _card(
       icon: Icons.assessment,
@@ -235,8 +228,6 @@ class ResultsScreen extends StatelessWidget {
     );
   }
 
-  // ---------------- COMMON COMPONENTS ----------------
-
   Widget _card({
     required IconData icon,
     required Color iconColor,
@@ -249,7 +240,7 @@ class ResultsScreen extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.1),
+            color: Colors.grey.withAlpha(26),
             blurRadius: 20,
             offset: const Offset(0, 10),
           ),
@@ -284,7 +275,7 @@ class ResultsScreen extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.1),
+        color: color.withAlpha(26),
         shape: BoxShape.circle,
       ),
       child: Icon(icon, color: color, size: 24),
@@ -375,7 +366,7 @@ class ResultsScreen extends StatelessWidget {
             child: Container(
               decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  colors: [color.withOpacity(0.8), color],
+                  colors: [color.withAlpha(204), color],
                 ),
                 borderRadius: BorderRadius.circular(6),
               ),
@@ -391,15 +382,15 @@ class ResultsScreen extends StatelessWidget {
     final Color color = score < 30
         ? Colors.green
         : score < 60
-        ? Colors.orange
-        : Colors.red;
+            ? Colors.orange
+            : Colors.red;
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.1),
+        color: color.withAlpha(26),
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: color.withOpacity(0.3)),
+        border: Border.all(color: color.withAlpha(77)),
       ),
       child: Column(
         children: [
@@ -435,8 +426,7 @@ class ResultsScreen extends StatelessWidget {
             SnackBar(
               content: const Text('Will add that later'),
               action: SnackBarAction(label: 'Undo', onPressed: () {}),
-              backgroundColor:
-                  Colors.blueGrey, // Optional: set background color
+              backgroundColor: Colors.blueGrey,
             ),
           );
         },
@@ -489,3 +479,4 @@ class ResultsScreen extends StatelessWidget {
     return descriptions[cleaned] ?? 'Enneagram Type';
   }
 }
+

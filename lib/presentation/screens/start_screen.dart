@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:personality_detector/presentation/cubit/quiz_cubit.dart';
 import 'package:personality_detector/presentation/screens/question_screen.dart';
 
+import '../widgets/feature_chip.dart';
+
 class StartScreen extends StatelessWidget {
   const StartScreen({super.key});
 
@@ -23,7 +25,6 @@ class StartScreen extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                // Logo/Icon
                 Expanded(child: Container()),
                 Container(
                   width: 120,
@@ -33,7 +34,7 @@ class StartScreen extends StatelessWidget {
                     shape: BoxShape.circle,
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.blue.withOpacity(0.3),
+                        color: Colors.blue.withAlpha(77),
                         blurRadius: 20,
                         spreadRadius: 5,
                       ),
@@ -46,8 +47,6 @@ class StartScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 40),
-
-                // Title
                 const Text(
                   'Discover Your\nPersonality',
                   style: TextStyle(
@@ -59,8 +58,6 @@ class StartScreen extends StatelessWidget {
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 16),
-
-                // Subtitle
                 Text(
                   'Take this comprehensive personality test to uncover your MBTI type, Big Five traits, and more',
                   style: TextStyle(
@@ -71,11 +68,8 @@ class StartScreen extends StatelessWidget {
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 60),
-
-                // Start Button
                 BlocListener<QuizCubit, QuizState>(
                   listener: (context, state) {
-                    // Navigate to question screen when questions are loaded
                     if (state.questions != null &&
                         state.currentQuestionIndex != null) {
                       WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -89,6 +83,13 @@ class StartScreen extends StatelessWidget {
                           ),
                         );
                       });
+                    } else if (state.hasError) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text(
+                              'Failed to load questions. Please try again later.'),
+                        ),
+                      );
                     }
                   },
                   child: Container(
@@ -103,7 +104,7 @@ class StartScreen extends StatelessWidget {
                       ),
                       boxShadow: [
                         BoxShadow(
-                          color: const Color(0xFF6C63FF).withOpacity(0.4),
+                          color: const Color(0xFF6C63FF).withAlpha(102),
                           blurRadius: 20,
                           offset: const Offset(0, 10),
                         ),
@@ -146,7 +147,7 @@ class StartScreen extends StatelessWidget {
                               Container(
                                 padding: const EdgeInsets.all(6),
                                 decoration: BoxDecoration(
-                                  color: Colors.white.withOpacity(0.2),
+                                  color: Colors.white.withAlpha(51),
                                   shape: BoxShape.circle,
                                 ),
                                 child: const Icon(
@@ -163,25 +164,22 @@ class StartScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 24),
-
-                // Features
                 Wrap(
                   spacing: 16,
                   runSpacing: 12,
                   alignment: WrapAlignment.center,
                   children: [
-                    _FeatureChip(icon: Icons.category, text: 'MBTI'),
-                    _FeatureChip(icon: Icons.analytics, text: 'Big Five'),
-                    _FeatureChip(icon: Icons.auto_awesome, text: 'Enneagram'),
-                    _FeatureChip(
+                    FeatureChip(icon: Icons.category, text: 'MBTI'),
+                    FeatureChip(icon: Icons.analytics, text: 'Big Five'),
+                    FeatureChip(icon: Icons.auto_awesome, text: 'Enneagram'),
+                    FeatureChip(
                       icon: Icons.health_and_safety,
                       text: 'RAADS-R',
                     ),
                   ],
                 ),
                 Expanded(child: Container()),
-
-                _FeatureChip(text: '© Cram Crackers'),
+                FeatureChip(text: '© Cram Crackers'),
               ],
             ),
           ),
@@ -191,47 +189,3 @@ class StartScreen extends StatelessWidget {
   }
 }
 
-class _FeatureChip extends StatelessWidget {
-  // Make IconData nullable
-  final IconData? icon;
-  final String text;
-
-  // Update the constructor to accept a nullable icon
-  const _FeatureChip({this.icon, required this.text});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.1),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
-          ),
-        ],
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          // Conditionally render the Icon and the SizedBox
-          if (icon != null) ...[
-            Icon(icon!, size: 16, color: const Color(0xFF6C63FF)),
-            const SizedBox(width: 6),
-          ],
-          Text(
-            text,
-            style: const TextStyle(
-              fontSize: 12,
-              fontWeight: FontWeight.w500,
-              color: Color(0xFF666666),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}

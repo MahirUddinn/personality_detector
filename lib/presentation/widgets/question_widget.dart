@@ -38,7 +38,6 @@ class _QuestionWidgetState extends State<QuestionWidget> {
     }
   }
 
-  // ... rest of your QuestionWidget code ...
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -47,7 +46,7 @@ class _QuestionWidgetState extends State<QuestionWidget> {
         borderRadius: BorderRadius.circular(24),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.1),
+            color: Colors.grey.withAlpha(26),
             blurRadius: 30,
             offset: const Offset(0, 10),
           ),
@@ -58,11 +57,10 @@ class _QuestionWidgetState extends State<QuestionWidget> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // Question Number Badge
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               decoration: BoxDecoration(
-                color: const Color(0xFF6C63FF).withOpacity(0.1),
+                color: const Color(0xFF6C63FF).withAlpha(26),
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Text(
@@ -75,8 +73,6 @@ class _QuestionWidgetState extends State<QuestionWidget> {
               ),
             ),
             const SizedBox(height: 32),
-
-            // Question Text
             Text(
               widget.question.text,
               style: const TextStyle(
@@ -88,16 +84,10 @@ class _QuestionWidgetState extends State<QuestionWidget> {
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 48),
-
-            // Slider
             _buildSlider(),
             const SizedBox(height: 32),
-
-            // Scale Labels
             _buildScaleLabels(),
             const SizedBox(height: 48),
-
-            // Next Button
             SizedBox(
               width: double.infinity,
               height: 56,
@@ -139,7 +129,6 @@ class _QuestionWidgetState extends State<QuestionWidget> {
   Widget _buildSlider() {
     return Column(
       children: [
-        // Current Value Display
         Container(
           width: 60,
           height: 60,
@@ -148,7 +137,7 @@ class _QuestionWidgetState extends State<QuestionWidget> {
             shape: BoxShape.circle,
             boxShadow: [
               BoxShadow(
-                color: const Color(0xFF6C63FF).withOpacity(0.3),
+                color: const Color(0xFF6C63FF).withAlpha(77),
                 blurRadius: 15,
                 spreadRadius: 2,
               ),
@@ -166,8 +155,6 @@ class _QuestionWidgetState extends State<QuestionWidget> {
           ),
         ),
         const SizedBox(height: 24),
-
-        // Slider
         SliderTheme(
           data: SliderThemeData(
             trackHeight: 8,
@@ -179,7 +166,7 @@ class _QuestionWidgetState extends State<QuestionWidget> {
             activeTrackColor: const Color(0xFF6C63FF),
             inactiveTrackColor: Colors.grey.shade300,
             thumbColor: Colors.white,
-            overlayColor: const Color(0xFF6C63FF).withOpacity(0.2),
+            overlayColor: const Color(0xFF6C63FF).withAlpha(51),
             valueIndicatorShape: const PaddleSliderValueIndicatorShape(),
             valueIndicatorColor: const Color(0xFF6C63FF),
             valueIndicatorTextStyle: const TextStyle(

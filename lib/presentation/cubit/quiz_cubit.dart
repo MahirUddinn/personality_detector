@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'dart:isolate';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:personality_detector/domain/models/question.dart';
 import 'package:personality_detector/domain/models/results.dart';
@@ -32,8 +32,7 @@ class QuizCubit extends Cubit<QuizState> {
         totalQuestions: _questions.length,
       ));
     } catch (e) {
-      emit(state.copyWith(isLoading: false));
-      rethrow;
+      emit(state.copyWith(isLoading: false, hasError: true));
     }
   }
 
@@ -58,14 +57,12 @@ class QuizCubit extends Cubit<QuizState> {
   Future<void> answer(int value) async {
     if (_currentIndex >= _questions.length || _isCalculatingResults) return;
 
-    // Store answer
     if (_answers.length <= _currentIndex) {
       _answers.add(value);
     } else {
       _answers[_currentIndex] = value;
     }
 
-    // Move to next question
     _currentIndex++;
 
     if (_currentIndex < _questions.length) {
@@ -73,190 +70,69 @@ class QuizCubit extends Cubit<QuizState> {
         currentQuestionIndex: _currentIndex,
       ));
     } else {
-      // Show calculating state
       emit(state.copyWith(
         currentQuestionIndex: _currentIndex,
         isCalculatingResults: true,
       ));
-
-      // Calculate results asynchronously to prevent UI freeze
       await _calculateResultsAsync();
     }
   }
 
   Future<void> _calculateResultsAsync() async {
     _isCalculatingResults = true;
-
-    // Use compute for large datasets (isolate for heavy computation)
     try {
-      final results = await computeResults(_answers, _questions);
+      final results = await compute(_calculateResultsInIsolate,
+          (answers: _answers, questions: _questions));
 
-      emit(QuizState(
+      emit(state.copyWith(
         results: results,
-        totalQuestions: _questions.length,
         isQuizCompleted: true,
+        isCalculatingResults: false,
       ));
     } catch (e) {
-      // Fallback to simple calculation if compute fails
       final results = _calculateResultsSync();
-      emit(QuizState(
+      emit(state.copyWith(
         results: results,
-        totalQuestions: _questions.length,
         isQuizCompleted: true,
+        isCalculatingResults: false,
       ));
     } finally {
-      _isCalculatingResults = false;
-    }
-  }
-
-  // Method to run in isolate
-  static Future<Results> computeResults(List<int> answers, List<Question> questions) async {
-    return _calculateResultsInIsolate(answers, questions);
-  }
-
-  static Future<Results> _calculateResultsInIsolate(List<int> answers, List<Question> questions) async {
-    // This runs in a separate isolate
-    final Map<String, double> mbtiScores = {
-      'E': 0, 'I': 0, 'S': 0, 'N': 0,
-      'T': 0, 'F': 0, 'J': 0, 'P': 0
-    };
-
-    final Map<String, double> big5Scores = {
-      'extraversion': 0, 'agreeableness': 0,
-      'conscientiousness': 0, 'neuroticism': 0,
-      'openness': 0
-    };
-
-    final Map<String, double> enneagramScores = {
-      '1': 0, '2': 0, '3': 0, '4': 0, '5': 0,
-      '6': 0, '7': 0, '8': 0, '9': 0
-    };
-
-    final Map<String, double> raadsScores = {
-      'social_relatedness': 0,
-      'circumscribed_interests': 0,
-      'sensory_motor': 0,
-      'language': 0
-    };
-
-    double raadsRawTotal = 0;
-
-    // Process in batches
-    final batchSize = 20;
-    for (int i = 0; i < answers.length; i++) {
-      if (i >= questions.length) break;
-
-      final answer = answers[i];
-      final question = questions[i];
-      final double normalized = (answer - 4).toDouble();
-
-      // MBTI
-      question.mbti.forEach((key, value) {
-        mbtiScores[key] = mbtiScores[key]! + normalized * value;
-      });
-
-      // Big Five
-      question.big5.forEach((key, value) {
-        big5Scores[key] = big5Scores[key]! + normalized * value;
-      });
-
-      // Enneagram
-      question.enneagram.forEach((key, value) {
-        enneagramScores[key] = enneagramScores[key]! + normalized * value;
-      });
-
-      // RAADS-R with raw score calculation
-      final double raadsItemRaw = ((normalized + 3) / 3).clamp(0.0, 2.0);
-
-      question.raads.forEach((key, value) {
-        raadsScores[key] = raadsScores[key]! + normalized * value;
-        raadsRawTotal += raadsItemRaw * value;
-      });
-
-      // Small delay every batch to prevent isolate from timing out
-      if (i % batchSize == 0) {
-        await Future.delayed(const Duration(milliseconds: 1));
+      if (_isCalculatingResults) {
+        _isCalculatingResults = false;
       }
     }
-
-    // Normalize Big Five
-    final Map<String, double> normalizedBig5 = {};
-    final double maxPossible = 3.0 * questions.length;
-    final double minPossible = -3.0 * questions.length;
-    final double range = maxPossible - minPossible;
-
-    big5Scores.forEach((key, value) {
-      final scaled = ((value - minPossible) / range) * 100;
-      normalizedBig5[key] = scaled.clamp(0.0, 100.0);
-    });
-
-    // MBTI Type
-    String mbtiType = '';
-    mbtiType += mbtiScores['E']! >= mbtiScores['I']! ? 'E' : 'I';
-    mbtiType += mbtiScores['S']! >= mbtiScores['N']! ? 'S' : 'N';
-    mbtiType += mbtiScores['T']! >= mbtiScores['F']! ? 'T' : 'F';
-    mbtiType += mbtiScores['J']! >= mbtiScores['P']! ? 'J' : 'P';
-
-    // Enneagram
-    String mainType = '1';
-    double highestScore = -double.infinity;
-    enneagramScores.forEach((key, value) {
-      if (value > highestScore) {
-        highestScore = value;
-        mainType = key;
-      }
-    });
-
-    final int mainInt = int.parse(mainType);
-    final int wing1 = (mainInt - 2 + 9) % 9 + 1;
-    final int wing2 = mainInt % 9 + 1;
-
-    final String wing = enneagramScores[wing1.toString()]! >= enneagramScores[wing2.toString()]!
-        ? wing1.toString()
-        : wing2.toString();
-
-    final enneagramType = '${mainType}w$wing';
-
-    // Normalize RAADS subscales
-    final Map<String, double> normalizedRaads = {};
-    final double raadsRange = 3.0 * questions.length;
-
-    raadsScores.forEach((key, value) {
-      double normalizedScore = ((value + (raadsRange * 0.5)) / raadsRange) * 100;
-      normalizedScore = normalizedScore.clamp(0, 100);
-      normalizedRaads[key] = normalizedScore;
-    });
-
-    // RAADS Interpretation
-    final int rawRaadsScore = raadsRawTotal.round();
-    final String interpretation = _getRaadsInterpretation(rawRaadsScore);
-
-    return Results(
-      mbtiType: mbtiType,
-      big5Percentages: normalizedBig5,
-      enneagramType: enneagramType,
-      raadsScores: normalizedRaads,
-      raadsRawScore: rawRaadsScore,
-      raadsInterpretation: interpretation,
-    );
   }
 
-  // Fallback synchronous calculation
   Results _calculateResultsSync() {
     final Map<String, double> mbtiScores = {
-      'E': 0, 'I': 0, 'S': 0, 'N': 0,
-      'T': 0, 'F': 0, 'J': 0, 'P': 0
+      'E': 0,
+      'I': 0,
+      'S': 0,
+      'N': 0,
+      'T': 0,
+      'F': 0,
+      'J': 0,
+      'P': 0
     };
 
     final Map<String, double> big5Scores = {
-      'extraversion': 0, 'agreeableness': 0,
-      'conscientiousness': 0, 'neuroticism': 0,
+      'extraversion': 0,
+      'agreeableness': 0,
+      'conscientiousness': 0,
+      'neuroticism': 0,
       'openness': 0
     };
 
     final Map<String, double> enneagramScores = {
-      '1': 0, '2': 0, '3': 0, '4': 0, '5': 0,
-      '6': 0, '7': 0, '8': 0, '9': 0
+      '1': 0,
+      '2': 0,
+      '3': 0,
+      '4': 0,
+      '5': 0,
+      '6': 0,
+      '7': 0,
+      '8': 0,
+      '9': 0
     };
 
     final Map<String, double> raadsScores = {
@@ -268,38 +144,40 @@ class QuizCubit extends Cubit<QuizState> {
 
     double raadsRawTotal = 0;
 
-    // Simplified calculation with early returns
     for (int i = 0; i < _answers.length && i < _questions.length; i++) {
       final answer = _answers[i];
       final question = _questions[i];
       final double normalized = (answer - 4).toDouble();
 
-      // Process each category
       for (final entry in question.mbti.entries) {
-        mbtiScores[entry.key] = mbtiScores[entry.key]! + normalized * entry.value;
+        mbtiScores[entry.key] =
+            mbtiScores[entry.key]! + normalized * entry.value;
       }
 
       for (final entry in question.big5.entries) {
-        big5Scores[entry.key] = big5Scores[entry.key]! + normalized * entry.value;
+        big5Scores[entry.key] =
+            big5Scores[entry.key]! + normalized * entry.value;
       }
 
       for (final entry in question.enneagram.entries) {
-        enneagramScores[entry.key] = enneagramScores[entry.key]! + normalized * entry.value;
+        enneagramScores[entry.key] =
+            enneagramScores[entry.key]! + normalized * entry.value;
       }
 
       final double raadsItemRaw = ((normalized + 3) / 3).clamp(0.0, 2.0);
       for (final entry in question.raads.entries) {
-        raadsScores[entry.key] = raadsScores[entry.key]! + normalized * entry.value;
+        raadsScores[entry.key] =
+            raadsScores[entry.key]! + normalized * entry.value;
         raadsRawTotal += raadsItemRaw * entry.value;
       }
     }
 
-    // Calculate results
     final normalizedBig5 = _normalizeScores(big5Scores, _questions.length);
 
     final mbtiType = _calculateMbtiType(mbtiScores);
     final enneagramType = _calculateEnneagramType(enneagramScores);
-    final normalizedRaads = _normalizeRaadsScores(raadsScores, _questions.length);
+    final normalizedRaads =
+        _normalizeRaadsScores(raadsScores, _questions.length);
     final int rawRaadsScore = raadsRawTotal.round();
     final String interpretation = _getRaadsInterpretation(rawRaadsScore);
 
@@ -313,7 +191,8 @@ class QuizCubit extends Cubit<QuizState> {
     );
   }
 
-  Map<String, double> _normalizeScores(Map<String, double> scores, int questionCount) {
+  Map<String, double> _normalizeScores(
+      Map<String, double> scores, int questionCount) {
     final Map<String, double> normalized = {};
     final double maxPossible = 3.0 * questionCount;
     final double minPossible = -3.0 * questionCount;
@@ -358,7 +237,8 @@ class QuizCubit extends Cubit<QuizState> {
     return '${mainType}w$wing';
   }
 
-  Map<String, double> _normalizeRaadsScores(Map<String, double> scores, int questionCount) {
+  Map<String, double> _normalizeRaadsScores(
+      Map<String, double> scores, int questionCount) {
     final Map<String, double> normalized = {};
     final double range = 3.0 * questionCount;
 
@@ -397,4 +277,139 @@ class QuizCubit extends Cubit<QuizState> {
 
   List<Question> get questions => _questions;
   int get currentIndex => _currentIndex;
+}
+
+Future<Results> _calculateResultsInIsolate(
+    ({List<int> answers, List<Question> questions}) data) async {
+  final answers = data.answers;
+  final questions = data.questions;
+  final Map<String, double> mbtiScores = {
+    'E': 0,
+    'I': 0,
+    'S': 0,
+    'N': 0,
+    'T': 0,
+    'F': 0,
+    'J': 0,
+    'P': 0
+  };
+
+  final Map<String, double> big5Scores = {
+    'extraversion': 0,
+    'agreeableness': 0,
+    'conscientiousness': 0,
+    'neuroticism': 0,
+    'openness': 0
+  };
+
+  final Map<String, double> enneagramScores = {
+    '1': 0,
+    '2': 0,
+    '3': 0,
+    '4': 0,
+    '5': 0,
+    '6': 0,
+    '7': 0,
+    '8': 0,
+    '9': 0
+  };
+
+  final Map<String, double> raadsScores = {
+    'social_relatedness': 0,
+    'circumscribed_interests': 0,
+    'sensory_motor': 0,
+    'language': 0
+  };
+
+  double raadsRawTotal = 0;
+
+  final batchSize = 20;
+  for (int i = 0; i < answers.length; i++) {
+    if (i >= questions.length) break;
+
+    final answer = answers[i];
+    final question = questions[i];
+    final double normalized = (answer - 4).toDouble();
+
+    question.mbti.forEach((key, value) {
+      mbtiScores[key] = mbtiScores[key]! + normalized * value;
+    });
+
+    question.big5.forEach((key, value) {
+      big5Scores[key] = big5Scores[key]! + normalized * value;
+    });
+
+    question.enneagram.forEach((key, value) {
+      enneagramScores[key] = enneagramScores[key]! + normalized * value;
+    });
+
+    final double raadsItemRaw = ((normalized + 3) / 3).clamp(0.0, 2.0);
+
+    question.raads.forEach((key, value) {
+      raadsScores[key] = raadsScores[key]! + normalized * value;
+      raadsRawTotal += raadsItemRaw * value;
+    });
+
+    if (i % batchSize == 0) {
+      await Future.delayed(const Duration(milliseconds: 1));
+    }
+  }
+
+  final Map<String, double> normalizedBig5 = {};
+  final double maxPossible = 3.0 * questions.length;
+  final double minPossible = -3.0 * questions.length;
+  final double range = maxPossible - minPossible;
+
+  big5Scores.forEach((key, value) {
+    final scaled = ((value - minPossible) / range) * 100;
+    normalizedBig5[key] = scaled.clamp(0.0, 100.0);
+  });
+
+  String mbtiType = '';
+  mbtiType += mbtiScores['E']! >= mbtiScores['I']! ? 'E' : 'I';
+  mbtiType += mbtiScores['S']! >= mbtiScores['N']! ? 'S' : 'N';
+  mbtiType += mbtiScores['T']! >= mbtiScores['F']! ? 'T' : 'F';
+  mbtiType += mbtiScores['J']! >= mbtiScores['P']! ? 'J' : 'P';
+
+  String mainType = '1';
+  double highestScore = -double.infinity;
+  enneagramScores.forEach((key, value) {
+    if (value > highestScore) {
+      highestScore = value;
+      mainType = key;
+    }
+  });
+
+  final int mainInt = int.parse(mainType);
+  final int wing1 = (mainInt - 2 + 9) % 9 + 1;
+  final int wing2 = mainInt % 9 + 1;
+
+  final String wing =
+      enneagramScores[wing1.toString()]! >= enneagramScores[wing2.toString()]!
+          ? wing1.toString()
+          : wing2.toString();
+
+  final enneagramType = '${mainType}w$wing';
+
+  final Map<String, double> normalizedRaads = {};
+  final double raadsRange = 3.0 * questions.length;
+
+  raadsScores.forEach((key, value) {
+    double normalizedScore = ((value + (raadsRange * 0.5)) / raadsRange) * 100;
+    normalizedScore = normalizedScore.clamp(0, 100);
+    normalizedRaads[key] = normalizedScore;
+  });
+
+  final int rawRaadsScore = raadsRawTotal.round();
+  final String interpretation =
+      QuizCubit._getRaadsInterpretation(rawRaadsScore);
+
+  return Results(
+    mbtiType: mbtiType,
+    big5Percentages: normalizedBig5,
+    enneagramType: enneagramType,
+    raadsScores: normalizedRaads,
+    raadsRawScore: rawRaadsScore,
+    raadsInterpretation: interpretation,
+  );
 }

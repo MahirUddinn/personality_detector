@@ -1,6 +1,8 @@
 part of 'quiz_cubit.dart';
+
 class QuizState {
   final bool isLoading;
+  final bool hasError;
   final int? currentQuestionIndex;
   final List<Question>? questions;
   final Results? results;
@@ -10,6 +12,7 @@ class QuizState {
 
   const QuizState({
     this.isLoading = false,
+    this.hasError = false,
     this.currentQuestionIndex,
     this.questions,
     this.results,
@@ -20,6 +23,7 @@ class QuizState {
 
   QuizState copyWith({
     bool? isLoading,
+    bool? hasError,
     int? currentQuestionIndex,
     List<Question>? questions,
     Results? results,
@@ -29,6 +33,7 @@ class QuizState {
   }) {
     return QuizState(
       isLoading: isLoading ?? this.isLoading,
+      hasError: hasError ?? this.hasError,
       currentQuestionIndex: currentQuestionIndex ?? this.currentQuestionIndex,
       questions: questions ?? this.questions,
       results: results ?? this.results,
