@@ -8,36 +8,97 @@ class ResultsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [Colors.blue.shade50, Colors.purple.shade50],
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) async {
+        if (!didPop) {
+          // Show confirmation dialog when trying to go back from results
+          final shouldGoBack = await showDialog<bool>(
+            context: context,
+            barrierDismissible: false,
+            builder: (context) => AlertDialog(
+              title: const Text('Go Back?'),
+              content: const Text('This will return you to the start screen.'),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.pop(context, false),
+                  child: const Text('Cancel'),
+                ),
+                TextButton(
+                  onPressed: () => Navigator.pop(context, true),
+                  child: const Text('OK'),
+                ),
+              ],
+            ),
+          );
+
+          if (shouldGoBack == true && context.mounted) {
+            // Go back to start screen
+            Navigator.of(context).popUntil((route) => route.isFirst);
+          }
+        }
+      },
+      child: Scaffold(
+        body: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [Colors.blue.shade50, Colors.purple.shade50],
+            ),
+          ),
+          child: CustomScrollView(
+            slivers: [
+              _buildHeader(),
+              SliverPadding(
+                padding: const EdgeInsets.all(24.0),
+                sliver: SliverList(
+                  delegate: SliverChildListDelegate([
+                    _buildMbtiResult(),
+                    const SizedBox(height: 20),
+                    _buildBig5Result(),
+                    const SizedBox(height: 20),
+                    _buildEnneagramResult(),
+                    const SizedBox(height: 20),
+                    _buildRaadsResult(),
+                    const SizedBox(height: 20),
+                    _buildRaadsSummaryCard(),
+                    const SizedBox(height: 40),
+                    _buildShareButton(context),
+                    const SizedBox(height: 20),
+                    // Add a back button for easier navigation
+                    _buildBackButton(context),
+                  ]),
+                ),
+              ),
+            ],
           ),
         ),
-        child: CustomScrollView(
-          slivers: [
-            _buildHeader(),
-            SliverPadding(
-              padding: const EdgeInsets.all(24.0),
-              sliver: SliverList(
-                delegate: SliverChildListDelegate([
-                  _buildMbtiResult(),
-                  const SizedBox(height: 20),
-                  _buildBig5Result(),
-                  const SizedBox(height: 20),
-                  _buildEnneagramResult(),
-                  const SizedBox(height: 20),
-                  _buildRaadsResult(),
-                  const SizedBox(height: 20),
-                  _buildRaadsSummaryCard(),
-                  const SizedBox(height: 40),
-                  _buildShareButton(context),
-                ]),
-              ),
-            ),
+      ),
+    );
+  }
+
+  Widget _buildBackButton(BuildContext context) {
+    return SizedBox(
+      width: double.infinity,
+      height: 56,
+      child: OutlinedButton(
+        onPressed: () {
+          Navigator.of(context).popUntil((route) => route.isFirst);
+        },
+        style: OutlinedButton.styleFrom(
+          foregroundColor: const Color(0xFF6C63FF),
+          side: const BorderSide(color: Color(0xFF6C63FF)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+        ),
+        child: const Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(Icons.home, size: 20),
+            SizedBox(width: 12),
+            Text('Back to Home'),
           ],
         ),
       ),
@@ -365,9 +426,7 @@ class ResultsScreen extends StatelessWidget {
             widthFactor: value / 100,
             child: Container(
               decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [color.withAlpha(204), color],
-                ),
+                gradient: LinearGradient(colors: [color.withAlpha(204), color]),
                 borderRadius: BorderRadius.circular(6),
               ),
             ),
@@ -382,8 +441,8 @@ class ResultsScreen extends StatelessWidget {
     final Color color = score < 30
         ? Colors.green
         : score < 60
-            ? Colors.orange
-            : Colors.red;
+        ? Colors.orange
+        : Colors.red;
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
@@ -423,9 +482,8 @@ class ResultsScreen extends StatelessWidget {
       child: ElevatedButton(
         onPressed: () {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: const Text('Will add that later'),
-              action: SnackBarAction(label: 'Undo', onPressed: () {}),
+            const SnackBar(
+              content: Text('Will add that later'),
               backgroundColor: Colors.blueGrey,
             ),
           );
@@ -479,4 +537,3 @@ class ResultsScreen extends StatelessWidget {
     return descriptions[cleaned] ?? 'Enneagram Type';
   }
 }
-
