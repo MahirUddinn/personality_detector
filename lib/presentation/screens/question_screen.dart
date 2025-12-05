@@ -30,29 +30,31 @@ class _QuestionScreenState extends State<QuestionScreen> {
       backgroundColor: Colors.grey.shade50,
       body: BlocListener<QuizCubit, QuizState>(
         listenWhen: (previous, current) {
-          return !previous.isQuizCompleted &&
-              current.isQuizCompleted &&
-              current.results != null &&
-              !current.isCalculatingResults &&
-              !_isNavigatingToResults;
+          return current.isQuizCompleted && current.results != null;
         },
         listener: (context, state) {
-          if (state.isQuizCompleted && state.results != null) {
-            _isNavigatingToResults = true;
-            WidgetsBinding.instance.addPostFrameCallback((_) {
+          if (_isNavigatingToResults) return;
+          _isNavigatingToResults = true;
+          
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            if (context.mounted) {
               Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
                   builder: (context) => ResultsScreen(results: state.results!),
                 ),
               );
-            });
-          }
+            }
+          });
         },
         child: BlocBuilder<QuizCubit, QuizState>(
           builder: (context, state) {
             if (state.isCalculatingResults) {
               return _buildCalculatingScreen(state.totalQuestions);
+            }
+
+            if (state.isQuizCompleted) {
+              return const Center(child: CircularProgressIndicator());
             }
 
             if (state.isLoading) {

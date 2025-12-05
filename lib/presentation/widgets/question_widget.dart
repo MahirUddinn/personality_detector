@@ -14,7 +14,7 @@ class QuestionWidget extends StatefulWidget {
     required this.questionNumber,
     required this.totalQuestions,
     required this.onAnswered,
-    this.initialValue = 4,
+    this.initialValue = 3,
   });
 
   @override
@@ -177,8 +177,8 @@ class _QuestionWidgetState extends State<QuestionWidget> {
           child: Slider(
             value: _sliderValue,
             min: 1,
-            max: 7,
-            divisions: 6,
+            max: 5,
+            divisions: 4,
             label: _sliderValue.round().toString(),
             onChanged: (value) {
               setState(() {
@@ -195,6 +195,8 @@ class _QuestionWidgetState extends State<QuestionWidget> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
+        // For 1-5 scale, we can adjust labels if needed or keep 5 labels.
+        // Assuming 5 labels (Strongly Disagree, Disagree, Neutral, Agree, Strongly Agree) fit perfectly for 1, 2, 3, 4, 5.
         Column(
           children: [
             Container(
