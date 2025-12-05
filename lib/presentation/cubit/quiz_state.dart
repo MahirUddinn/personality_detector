@@ -9,6 +9,7 @@ class QuizState {
   final int totalQuestions;
   final bool isQuizCompleted;
   final bool isCalculatingResults;
+  final List<int> answers;
 
   const QuizState({
     this.isLoading = false,
@@ -19,6 +20,7 @@ class QuizState {
     this.totalQuestions = 0,
     this.isQuizCompleted = false,
     this.isCalculatingResults = false,
+    this.answers = const [],
   });
 
   QuizState copyWith({
@@ -30,6 +32,7 @@ class QuizState {
     int? totalQuestions,
     bool? isQuizCompleted,
     bool? isCalculatingResults,
+    List<int>? answers,
   }) {
     return QuizState(
       isLoading: isLoading ?? this.isLoading,
@@ -40,6 +43,7 @@ class QuizState {
       totalQuestions: totalQuestions ?? this.totalQuestions,
       isQuizCompleted: isQuizCompleted ?? this.isQuizCompleted,
       isCalculatingResults: isCalculatingResults ?? this.isCalculatingResults,
+      answers: answers ?? this.answers,
     );
   }
 }

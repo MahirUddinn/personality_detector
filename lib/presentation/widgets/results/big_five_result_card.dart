@@ -81,7 +81,7 @@ class BigFiveResultCard extends StatelessWidget {
     const colors = {
       'Openness': Colors.blue,
       'Conscientiousness': Colors.green,
-      'Extraversion': Colors.orange,
+      'Extroversion': Colors.orange,
       'Agreeableness': Colors.pink,
       'Neuroticism': Colors.purple,
     };

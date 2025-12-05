@@ -245,6 +245,9 @@ class _QuestionScreenState extends State<QuestionScreen> {
                     question: question,
                     questionNumber: questionNumber,
                     totalQuestions: totalQuestions,
+                    initialValue: state.answers.length > state.currentQuestionIndex!
+                        ? state.answers[state.currentQuestionIndex!]
+                        : 3,
                     onAnswered: (value) {
                       context.read<QuizCubit>().answer(value);
                     },

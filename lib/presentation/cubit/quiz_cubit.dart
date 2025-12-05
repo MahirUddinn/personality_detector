@@ -29,6 +29,7 @@ class QuizCubit extends Cubit<QuizState> {
           questions: _questions,
           currentQuestionIndex: _currentIndex,
           totalQuestions: _questions.length,
+          answers: const [],
         ),
       );
     } catch (e) {
@@ -64,12 +65,16 @@ class QuizCubit extends Cubit<QuizState> {
     _currentIndex++;
 
     if (_currentIndex < _questions.length) {
-      emit(state.copyWith(currentQuestionIndex: _currentIndex));
+      emit(state.copyWith(
+        currentQuestionIndex: _currentIndex,
+        answers: List.from(_answers),
+      ));
     } else {
       emit(
         state.copyWith(
           currentQuestionIndex: _currentIndex,
           isCalculatingResults: true,
+          answers: List.from(_answers),
         ),
       );
       await _calculateResultsAsync();
@@ -120,11 +125,11 @@ class QuizCubit extends Cubit<QuizState> {
     };
 
     final Map<String, double> big5Scores = {
-      'extraversion': 0,
-      'agreeableness': 0,
-      'conscientiousness': 0,
-      'neuroticism': 0,
-      'openness': 0,
+      'Extroversion': 0,
+      'Agreeableness': 0,
+      'Conscientiousness': 0,
+      'Neuroticism': 0,
+      'Openness': 0,
     };
 
     final Map<String, double> enneagramScores = {
@@ -159,8 +164,17 @@ class QuizCubit extends Cubit<QuizState> {
       }
 
       for (final entry in question.big5.entries) {
-        big5Scores[entry.key] =
-            big5Scores[entry.key]! + normalized * entry.value;
+        String mappedKey;
+        if (entry.key.toLowerCase() == 'extraversion') {
+          mappedKey = 'Extroversion';
+        } else {
+          mappedKey = entry.key[0].toUpperCase() + entry.key.substring(1);
+        }
+
+        if (big5Scores.containsKey(mappedKey)) {
+          big5Scores[mappedKey] =
+              big5Scores[mappedKey]! + normalized * entry.value;
+        }
       }
 
       for (final entry in question.enneagram.entries) {
@@ -319,19 +333,19 @@ Future<Results> _calculateResultsInIsolate(
   };
 
   final Map<String, double> big5Scores = {
-    'extraversion': 0,
-    'agreeableness': 0,
-    'conscientiousness': 0,
-    'neuroticism': 0,
-    'openness': 0,
+    'Extroversion': 0,
+    'Agreeableness': 0,
+    'Conscientiousness': 0,
+    'Neuroticism': 0,
+    'Openness': 0,
   };
 
   final Map<String, double> big5MaxPossible = {
-    'extraversion': 0,
-    'agreeableness': 0,
-    'conscientiousness': 0,
-    'neuroticism': 0,
-    'openness': 0,
+    'Extroversion': 0,
+    'Agreeableness': 0,
+    'Conscientiousness': 0,
+    'Neuroticism': 0,
+    'Openness': 0,
   };
 
   final Map<String, double> enneagramScores = {
@@ -372,10 +386,18 @@ Future<Results> _calculateResultsInIsolate(
     });
 
     question.big5.forEach((key, weight) {
-      if (big5Scores.containsKey(key)) {
-        big5Scores[key] = big5Scores[key]! + (normalized * weight);
+      String? mappedKey;
+      if (key.toLowerCase() == 'extraversion') {
+        mappedKey = 'Extroversion';
+      } else {
+        mappedKey = key[0].toUpperCase() + key.substring(1);
+      }
 
-        big5MaxPossible[key] = big5MaxPossible[key]! + (2.0 * weight.abs());
+      if (big5Scores.containsKey(mappedKey)) {
+        big5Scores[mappedKey] = big5Scores[mappedKey]! + (normalized * weight);
+
+        big5MaxPossible[mappedKey] =
+            big5MaxPossible[mappedKey]! + (2.0 * weight.abs());
       }
     });
 
@@ -386,15 +408,15 @@ Future<Results> _calculateResultsInIsolate(
     });
 
     double raadsPoint = 0;
-    if (normalized >= 2)
+    if (normalized >= 2) {
       raadsPoint = 3;
-    else if (normalized >= 1)
+    } else if (normalized >= 1) {
       raadsPoint = 2;
-    else if (normalized >= 0)
+    } else if (normalized >= 0) {
       raadsPoint = 1;
-    else
+    } else {
       raadsPoint = 0;
-
+    }
     question.raads.forEach((key, weight) {
       if (raadsScores.containsKey(key)) {
         raadsScores[key] = raadsScores[key]! + (raadsPoint * weight);

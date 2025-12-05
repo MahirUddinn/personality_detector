@@ -206,7 +206,7 @@ class StartScreen extends StatelessWidget {
                         onTap: () => _showFeatureInfo(
                           context,
                           'MBTI (Myers-Briggs)',
-                          'The Myers-Briggs Type Indicator classifies personalities into 16 types based on how people perceive the world and make decisions. It explores 4 key dimensions: Introversion/Extraversion, Sensing/Intuition, Thinking/Feeling, and Judging/Perceiving.',
+                          'The Myers-Briggs Type Indicator classifies personalities into 16 types based on how people perceive the world and make decisions. It explores 4 key dimensions: Introversion/Extroversion, Sensing/Intuition, Thinking/Feeling, and Judging/Perceiving.',
                         ),
                       ),
                       FeatureChip(
@@ -215,7 +215,7 @@ class StartScreen extends StatelessWidget {
                         onTap: () => _showFeatureInfo(
                           context,
                           'Big Five Traits',
-                          'The Big Five model is a widely accepted psychological theory that breaks personality down into five core traits: Openness, Conscientiousness, Extraversion, Agreeableness, and Neuroticism (OCEAN).',
+                          'The Big Five model is a widely accepted psychological theory that breaks personality down into five core traits: Openness, Conscientiousness, Extroversion, Agreeableness, and Neuroticism (OCEAN).',
                         ),
                       ),
                       FeatureChip(
