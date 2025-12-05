@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:personality_detector/presentation/cubit/quiz_cubit.dart';
+import 'package:personality_detector/data/repositories/quiz_repository_impl.dart';
 import 'package:personality_detector/presentation/screens/results_screen.dart';
 import 'package:personality_detector/presentation/screens/start_screen.dart';
 import 'package:personality_detector/presentation/widgets/question_widget.dart';
-
-import '../../data/repositories/quiz_repository_impl.dart';
 import '../widgets/question_header.dart';
 
 class QuestionScreen extends StatefulWidget {
@@ -54,7 +53,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
             }
 
             if (state.isQuizCompleted) {
-              return const Center(child: CircularProgressIndicator());
+              return _buildCalculatingScreen(state.totalQuestions);
             }
 
             if (state.isLoading) {

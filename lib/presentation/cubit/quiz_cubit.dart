@@ -17,7 +17,7 @@ class QuizCubit extends Cubit<QuizState> {
   QuizCubit(this._quizRepository) : _answers = [], super(const QuizState());
 
   Future<void> startQuiz() async {
-    emit(state.copyWith(isLoading: true));
+    emit(const QuizState(isLoading: true));
     try {
       _questions = await _quizRepository.getQuestions();
       _currentIndex = 0;
@@ -32,7 +32,7 @@ class QuizCubit extends Cubit<QuizState> {
         ),
       );
     } catch (e) {
-      emit(state.copyWith(isLoading: false, hasError: true));
+      emit(const QuizState(isLoading: false, hasError: true));
     }
   }
 

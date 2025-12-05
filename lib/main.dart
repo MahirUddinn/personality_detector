@@ -13,14 +13,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Personality Detector',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: BlocProvider(
-        create: (context) => QuizCubit(QuizRepositoryImpl()),
-        child: const StartScreen(),
+    return BlocProvider(
+      create: (context) => QuizCubit(QuizRepositoryImpl()),
+      child: MaterialApp(
+        title: 'Personality Detector',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: const StartScreen(),
       ),
     );
   }

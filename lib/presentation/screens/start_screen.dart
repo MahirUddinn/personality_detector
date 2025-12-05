@@ -109,10 +109,7 @@ class StartScreen extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (_) => BlocProvider.value(
-                                value: context.read<QuizCubit>(),
-                                child: const QuestionScreen(),
-                              ),
+                              builder: (_) => const QuestionScreen(),
                             ),
                           );
                         });
@@ -203,12 +200,41 @@ class StartScreen extends StatelessWidget {
                     runSpacing: 12,
                     alignment: WrapAlignment.center,
                     children: [
-                      FeatureChip(icon: Icons.category, text: 'MBTI'),
-                      FeatureChip(icon: Icons.analytics, text: 'Big Five'),
-                      FeatureChip(icon: Icons.auto_awesome, text: 'Enneagram'),
+                      FeatureChip(
+                        icon: Icons.category,
+                        text: 'MBTI',
+                        onTap: () => _showFeatureInfo(
+                          context,
+                          'MBTI (Myers-Briggs)',
+                          'The Myers-Briggs Type Indicator classifies personalities into 16 types based on how people perceive the world and make decisions. It explores 4 key dimensions: Introversion/Extraversion, Sensing/Intuition, Thinking/Feeling, and Judging/Perceiving.',
+                        ),
+                      ),
+                      FeatureChip(
+                        icon: Icons.analytics,
+                        text: 'Big Five',
+                        onTap: () => _showFeatureInfo(
+                          context,
+                          'Big Five Traits',
+                          'The Big Five model is a widely accepted psychological theory that breaks personality down into five core traits: Openness, Conscientiousness, Extraversion, Agreeableness, and Neuroticism (OCEAN).',
+                        ),
+                      ),
+                      FeatureChip(
+                        icon: Icons.auto_awesome,
+                        text: 'Enneagram',
+                        onTap: () => _showFeatureInfo(
+                          context,
+                          'Enneagram',
+                          'The Enneagram describes 9 distinct personality types with unique motivations, fears, and internal dynamics. It helps explain how people interpret the world and manage their emotions.',
+                        ),
+                      ),
                       FeatureChip(
                         icon: Icons.health_and_safety,
                         text: 'RAADS-R',
+                        onTap: () => _showFeatureInfo(
+                          context,
+                          'RAADS-R',
+                          'The Ritvo Autism Asperger Diagnostic Scale-Revised (RAADS-R) is a self-report instrument designed to identify adult autistics who may have previously escaped diagnosis. This component provides a screening score.',
+                        ),
                       ),
                     ],
                   ),
@@ -219,6 +245,27 @@ class StartScreen extends StatelessWidget {
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  void _showFeatureInfo(
+    BuildContext context,
+    String title,
+    String description,
+  ) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(title),
+        content: Text(description),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Close'),
+          ),
+        ],
       ),
     );
   }

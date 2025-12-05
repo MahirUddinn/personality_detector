@@ -1,10 +1,66 @@
-import 'package:flutter/material.dart';
-import 'package:personality_detector/domain/models/results.dart';
+import 'dart:io';
+import 'dart:ui' as ui;
 
-class ResultsScreen extends StatelessWidget {
+import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:personality_detector/domain/models/results.dart';
+import 'package:personality_detector/presentation/cubit/quiz_cubit.dart';
+import 'package:personality_detector/presentation/widgets/results/action_buttons.dart';
+import 'package:personality_detector/presentation/widgets/results/big_five_result_card.dart';
+import 'package:personality_detector/presentation/widgets/results/enneagram_result_card.dart';
+import 'package:personality_detector/presentation/widgets/results/mbti_result_card.dart';
+import 'package:personality_detector/presentation/widgets/results/raads_result_card.dart';
+import 'package:personality_detector/presentation/widgets/results/results_header.dart';
+import 'package:share_plus/share_plus.dart';
+
+class ResultsScreen extends StatefulWidget {
   final Results results;
 
   const ResultsScreen({super.key, required this.results});
+
+  @override
+  State<ResultsScreen> createState() => _ResultsScreenState();
+}
+
+class _ResultsScreenState extends State<ResultsScreen> with TickerProviderStateMixin {
+  final GlobalKey _shareKey = GlobalKey();
+  late List<AnimationController> _controllers;
+  late List<Animation<double>> _animations;
+
+  @override
+  void initState() {
+    super.initState();
+    _controllers = List.generate(
+      4,
+      (index) => AnimationController(
+        vsync: this,
+        duration: const Duration(milliseconds: 600),
+      ),
+    );
+
+    _animations = _controllers.map((controller) {
+      return CurvedAnimation(
+        parent: controller,
+        curve: Curves.easeOut,
+      );
+    }).toList();
+
+    for (int i = 0; i < _controllers.length; i++) {
+      Future.delayed(Duration(milliseconds: i * 150), () {
+        if (mounted) _controllers[i].forward();
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    for (var controller in _controllers) {
+      controller.dispose();
+    }
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +68,6 @@ class ResultsScreen extends StatelessWidget {
       canPop: false,
       onPopInvokedWithResult: (didPop, result) async {
         if (!didPop) {
-          // Show confirmation dialog when trying to go back from results
           final shouldGoBack = await showDialog<bool>(
             context: context,
             barrierDismissible: false,
@@ -33,7 +88,7 @@ class ResultsScreen extends StatelessWidget {
           );
 
           if (shouldGoBack == true && context.mounted) {
-            // Go back to start screen
+            context.read<QuizCubit>().reset();
             Navigator.of(context).popUntil((route) => route.isFirst);
           }
         }
@@ -49,24 +104,21 @@ class ResultsScreen extends StatelessWidget {
           ),
           child: CustomScrollView(
             slivers: [
-              _buildHeader(),
+              const ResultsHeader(),
               SliverPadding(
                 padding: const EdgeInsets.all(24.0),
                 sliver: SliverList(
                   delegate: SliverChildListDelegate([
-                    _buildMbtiResult(),
-                    const SizedBox(height: 20),
-                    _buildBig5Result(),
-                    const SizedBox(height: 20),
-                    _buildEnneagramResult(),
-                    const SizedBox(height: 20),
-                    _buildRaadsResult(),
-                    const SizedBox(height: 20),
-                    _buildRaadsSummaryCard(),
+                    RepaintBoundary(
+                      key: _shareKey,
+                      child: _buildShareableContent(),
+                    ),
                     const SizedBox(height: 40),
-                    _buildShareButton(context),
+                    ActionButtons(
+                      onShare: _shareResults,
+                      onSave: _saveToDevice,
+                    ),
                     const SizedBox(height: 20),
-                    // Add a back button for easier navigation
                     _buildBackButton(context),
                   ]),
                 ),
@@ -78,12 +130,110 @@ class ResultsScreen extends StatelessWidget {
     );
   }
 
+  Future<void> _shareResults() async {
+    try {
+      final boundary = _shareKey.currentContext?.findRenderObject() as RenderRepaintBoundary?;
+      if (boundary == null) return;
+
+      final image = await boundary.toImage(pixelRatio: 3.0);
+      final byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+      if (byteData == null) return;
+
+      final directory = await getTemporaryDirectory();
+      final file = File('${directory.path}/personality_results.png');
+      await file.writeAsBytes(byteData.buffer.asUint8List());
+
+      await Share.shareXFiles(
+        [XFile(file.path)],
+        text: 'Check out my personality test results!',
+      );
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Failed to share: $e')),
+        );
+      }
+    }
+  }
+
+  Future<void> _saveToDevice() async {
+    try {
+      final boundary = _shareKey.currentContext?.findRenderObject() as RenderRepaintBoundary?;
+      if (boundary == null) return;
+
+      final image = await boundary.toImage(pixelRatio: 3.0);
+      final byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+      if (byteData == null) return;
+
+      final directory = await getApplicationDocumentsDirectory();
+      final timestamp = DateTime.now().millisecondsSinceEpoch;
+      final file = File('${directory.path}/personality_results_$timestamp.png');
+      await file.writeAsBytes(byteData.buffer.asUint8List());
+
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Saved to ${file.path}'),
+            duration: const Duration(seconds: 3),
+          ),
+        );
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Failed to save: $e')),
+        );
+      }
+    }
+  }
+
+  Widget _buildShareableContent() {
+    return Container(
+      color: Colors.white,
+      padding: const EdgeInsets.all(24.0),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const Text(
+            'My Personality Results',
+            style: TextStyle(
+              fontSize: 28,
+              fontWeight: FontWeight.bold,
+              color: Color(0xFF333333),
+            ),
+          ),
+          const SizedBox(height: 24),
+          _buildAnimatedCard(0, MbtiResultCard(mbtiType: widget.results.mbtiType)),
+          const SizedBox(height: 20),
+          _buildAnimatedCard(
+            1,
+            BigFiveResultCard(big5Percentages: widget.results.big5Percentages),
+          ),
+          const SizedBox(height: 20),
+          _buildAnimatedCard(
+            2,
+            EnneagramResultCard(enneagramType: widget.results.enneagramType),
+          ),
+          const SizedBox(height: 20),
+          _buildAnimatedCard(
+            3,
+            RaadsResultCard(
+              rawScore: widget.results.raadsRawScore,
+              interpretation: widget.results.raadsInterpretation,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   Widget _buildBackButton(BuildContext context) {
     return SizedBox(
       width: double.infinity,
       height: 56,
       child: OutlinedButton(
         onPressed: () {
+          context.read<QuizCubit>().reset();
           Navigator.of(context).popUntil((route) => route.isFirst);
         },
         style: OutlinedButton.styleFrom(
@@ -105,435 +255,16 @@ class ResultsScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildHeader() {
-    return SliverAppBar(
-      expandedHeight: 200,
-      flexibleSpace: FlexibleSpaceBar(
-        background: Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              colors: [Color(0xFF6C63FF), Color(0xFF4A44C6)],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
-          ),
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Icon(Icons.celebration, size: 60, color: Colors.white),
-                const SizedBox(height: 16),
-                const Text(
-                  'Results',
-                  style: TextStyle(
-                    fontSize: 36,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  'Your Personality Analysis',
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.white.withAlpha(230),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
+  Widget _buildAnimatedCard(int index, Widget child) {
+    return SlideTransition(
+      position: Tween<Offset>(
+        begin: const Offset(0, 0.3),
+        end: Offset.zero,
+      ).animate(_animations[index]),
+      child: FadeTransition(
+        opacity: _animations[index],
+        child: child,
       ),
     );
-  }
-
-  Widget _buildMbtiResult() {
-    return _card(
-      icon: Icons.category,
-      iconColor: const Color(0xFF6C63FF),
-      title: 'MBTI Type',
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 24),
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              const Color(0xFF6C63FF).withAlpha(26),
-              const Color(0xFF4A44C6).withAlpha(26),
-            ],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ),
-          borderRadius: BorderRadius.circular(16),
-        ),
-        child: Center(
-          child: Text(
-            results.mbtiType,
-            style: const TextStyle(
-              fontSize: 48,
-              fontWeight: FontWeight.bold,
-              color: Color(0xFF6C63FF),
-              letterSpacing: 2,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildBig5Result() {
-    return _card(
-      icon: Icons.analytics,
-      iconColor: Colors.orange,
-      title: 'Big Five Traits',
-      child: Column(
-        children: results.big5Percentages.entries.map((entry) {
-          final value = entry.value;
-          return _buildTraitBar(
-            label: entry.key,
-            value: value,
-            color: _getTraitColor(entry.key),
-          );
-        }).toList(),
-      ),
-    );
-  }
-
-  Widget _buildEnneagramResult() {
-    return _card(
-      icon: Icons.auto_awesome,
-      iconColor: Colors.purple,
-      title: 'Enneagram Type',
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              Colors.purple.withAlpha(26),
-              Colors.deepPurple.withAlpha(26),
-            ],
-          ),
-          borderRadius: BorderRadius.circular(16),
-        ),
-        child: Row(
-          children: [
-            _circle(
-              color: Colors.purple,
-              text: results.enneagramType.substring(0, 1),
-            ),
-            const SizedBox(width: 20),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Type ${results.enneagramType}',
-                    style: const TextStyle(
-                      fontSize: 28,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.purple,
-                    ),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    _getEnneagramDescription(results.enneagramType),
-                    style: TextStyle(fontSize: 14, color: Colors.grey.shade600),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildRaadsResult() {
-    return _card(
-      icon: Icons.health_and_safety,
-      iconColor: Colors.teal,
-      title: 'RAADS-R Subscale Scores',
-      child: Wrap(
-        spacing: 12,
-        runSpacing: 12,
-        children: results.raadsScores.entries.map((entry) {
-          return _buildScoreChip(label: entry.key, score: entry.value);
-        }).toList(),
-      ),
-    );
-  }
-
-  Widget _buildRaadsSummaryCard() {
-    return _card(
-      icon: Icons.assessment,
-      iconColor: Colors.redAccent,
-      title: 'RAADS-R Summary',
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _summaryRow(
-            label: "Raw Score",
-            value: results.raadsRawScore.toString(),
-            color: Colors.redAccent,
-          ),
-          const SizedBox(height: 12),
-          Text(
-            results.raadsInterpretation,
-            style: TextStyle(
-              fontSize: 16,
-              height: 1.4,
-              color: Colors.grey.shade700,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _card({
-    required IconData icon,
-    required Color iconColor,
-    required String title,
-    required Widget child,
-  }) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withAlpha(26),
-            blurRadius: 20,
-            offset: const Offset(0, 10),
-          ),
-        ],
-      ),
-      padding: const EdgeInsets.all(24),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              _circleIcon(icon, iconColor),
-              const SizedBox(width: 16),
-              Text(
-                title,
-                style: const TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xFF333333),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 20),
-          child,
-        ],
-      ),
-    );
-  }
-
-  Widget _circleIcon(IconData icon, Color color) {
-    return Container(
-      padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: color.withAlpha(26),
-        shape: BoxShape.circle,
-      ),
-      child: Icon(icon, color: color, size: 24),
-    );
-  }
-
-  Widget _circle({required Color color, required String text}) {
-    return Container(
-      width: 60,
-      height: 60,
-      decoration: BoxDecoration(color: color, shape: BoxShape.circle),
-      child: Center(
-        child: Text(
-          text,
-          style: const TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _summaryRow({
-    required String label,
-    required String value,
-    required Color color,
-  }) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(
-          label,
-          style: TextStyle(fontSize: 18, color: Colors.grey.shade700),
-        ),
-        Text(
-          value,
-          style: TextStyle(
-            fontSize: 22,
-            fontWeight: FontWeight.bold,
-            color: color,
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildTraitBar({
-    required String label,
-    required double value,
-    required Color color,
-  }) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              label,
-              style: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
-                color: Color(0xFF555555),
-              ),
-            ),
-            Text(
-              '${value.toStringAsFixed(1)}%',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                color: color,
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 8),
-        Container(
-          height: 12,
-          decoration: BoxDecoration(
-            color: Colors.grey.shade200,
-            borderRadius: BorderRadius.circular(6),
-          ),
-          child: FractionallySizedBox(
-            alignment: Alignment.centerLeft,
-            widthFactor: value / 100,
-            child: Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(colors: [color.withAlpha(204), color]),
-                borderRadius: BorderRadius.circular(6),
-              ),
-            ),
-          ),
-        ),
-        const SizedBox(height: 20),
-      ],
-    );
-  }
-
-  Widget _buildScoreChip({required String label, required double score}) {
-    final Color color = score < 30
-        ? Colors.green
-        : score < 60
-        ? Colors.orange
-        : Colors.red;
-
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-      decoration: BoxDecoration(
-        color: color.withAlpha(26),
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: color.withAlpha(77)),
-      ),
-      child: Column(
-        children: [
-          Text(
-            label,
-            style: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w500,
-              color: color,
-            ),
-          ),
-          const SizedBox(height: 6),
-          Text(
-            score.toStringAsFixed(1),
-            style: TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-              color: color,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildShareButton(context) {
-    return SizedBox(
-      width: double.infinity,
-      height: 56,
-      child: ElevatedButton(
-        onPressed: () {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Will add that later'),
-              backgroundColor: Colors.blueGrey,
-            ),
-          );
-        },
-        style: ElevatedButton.styleFrom(
-          backgroundColor: const Color(0xFF6C63FF),
-          foregroundColor: Colors.white,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
-          ),
-        ),
-        child: const Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(Icons.share, size: 20),
-            SizedBox(width: 12),
-            Text(
-              'Share Results',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Color _getTraitColor(String trait) {
-    const colors = {
-      'Openness': Colors.blue,
-      'Conscientiousness': Colors.green,
-      'Extraversion': Colors.orange,
-      'Agreeableness': Colors.pink,
-      'Neuroticism': Colors.purple,
-    };
-    return colors[trait] ?? Colors.grey;
-  }
-
-  String _getEnneagramDescription(String type) {
-    final descriptions = {
-      '1': 'The Reformer - Principled, Purposeful, Self-Controlled',
-      '2': 'The Helper - Caring, Interpersonal, Generous',
-      '3': 'The Achiever - Success-Oriented, Pragmatic, Image-Conscious',
-      '4': 'The Individualist - Sensitive, Withdrawn, Expressive',
-      '5': 'The Investigator - Intense, Cerebral, Perceptive',
-      '6': 'The Loyalist - Committed, Security-Oriented, Engaging',
-      '7': 'The Enthusiast - Busy, Fun-Loving, Spontaneous',
-      '8': 'The Challenger - Powerful, Dominating, Self-Confident',
-      '9': 'The Peacemaker - Easygoing, Self-Effacing, Receptive',
-    };
-    final cleaned = type.replaceAll(RegExp(r'[^0-9]'), '');
-    return descriptions[cleaned] ?? 'Enneagram Type';
   }
 }

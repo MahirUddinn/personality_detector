@@ -3,13 +3,18 @@ import 'package:flutter/material.dart';
 class FeatureChip extends StatelessWidget {
   final IconData? icon;
   final String text;
+  final VoidCallback? onTap;
 
-  const FeatureChip({super.key, this.icon, required this.text});
+  const FeatureChip({
+    super.key,
+    this.icon,
+    required this.text,
+    this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(20),
@@ -21,22 +26,32 @@ class FeatureChip extends StatelessWidget {
           ),
         ],
       ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          if (icon != null) ...[
-            Icon(icon!, size: 16, color: const Color(0xFF6C63FF)),
-            const SizedBox(width: 6),
-          ],
-          Text(
-            text,
-            style: const TextStyle(
-              fontSize: 12,
-              fontWeight: FontWeight.w500,
-              color: Color(0xFF666666),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(20),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                if (icon != null) ...[
+                  Icon(icon!, size: 16, color: const Color(0xFF6C63FF)),
+                  const SizedBox(width: 6),
+                ],
+                Text(
+                  text,
+                  style: const TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500,
+                    color: Color(0xFF666666),
+                  ),
+                ),
+              ],
             ),
           ),
-        ],
+        ),
       ),
     );
   }
