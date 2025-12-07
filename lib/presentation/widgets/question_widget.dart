@@ -183,17 +183,17 @@ class _QuestionWidgetState extends State<QuestionWidget> {
             decoration: BoxDecoration(color: color, shape: BoxShape.circle),
           ),
           SizedBox(height: 4),
-          FittedBox(
-            fit: BoxFit.scaleDown,
-            child: Text(
-              text,
-              style: TextStyle(
-                fontSize: 12,
-                color: Colors.grey,
-                fontWeight: FontWeight.w500,
-              ),
-              textAlign: align,
-              maxLines: 2,
+          Text(
+            text,
+
+            textScaler: TextScaler.noScaling,
+            textAlign: align,
+            maxLines: 2,
+            overflow: TextOverflow.visible,
+            style: TextStyle(
+              fontSize: 10,
+              color: Colors.grey,
+              fontWeight: FontWeight.w500
             ),
           ),
         ],

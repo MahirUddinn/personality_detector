@@ -68,77 +68,50 @@ class _QuestionScreenState extends State<QuestionScreen> {
           await _showExitConfirmationDialog(context);
         }
       },
-      child: Stack(
+      child: Column(
         children: [
-          Column(
-            children: [
-              SizedBox(height: 32),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 24.0),
-                child: QuestionHeader(
-                  questionNumber: currentQIndex + 1,
-                  totalQuestions: totalQuestions,
-                  progress: progress,
-                ),
-              ),
-              SizedBox(height: 24),
-              Expanded(
-                child: PageView.builder(
-                  controller: _pageController,
-                  physics: NeverScrollableScrollPhysics(),
-
-                  itemCount: totalQuestions,
-                  itemBuilder: (pageContext, index) {
-                    final question = state.questions![index];
-                    final questionNumber = index + 1;
-                    return Padding(
-                      padding: EdgeInsets.fromLTRB(24, 0, 24, 24),
-                      child: Center(
-                        child: SingleChildScrollView(
-                          child: QuestionWidget(
-                            question: question,
-                            questionNumber: questionNumber,
-                            totalQuestions: totalQuestions,
-                            initialValue: state.answers.length > index
-                                ? state.answers[index]
-                                : 3,
-                            onChanged: (value) {
-                              _currentAnswer = value;
-                            },
-                          ),
-                        ),
-                      ),
-                    );
-                  },
-                ),
-              ),
-
-              _buildBottomBar(context, state),
-            ],
-          ),
-
-          Positioned(
-            top: 8,
-            right: 16,
-            child: IconButton(
-              icon: Container(
-                padding: EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  color: Colors.white.withAlpha(230),
-                  shape: BoxShape.circle,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withAlpha(51),
-                      blurRadius: 4,
-                      offset: Offset(0, 2),
-                    ),
-                  ],
-                ),
-                child: Icon(Icons.close, size: 20, color: Colors.grey),
-              ),
-              onPressed: () => _showExitConfirmationDialog(context),
+          SizedBox(height: 32),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 24.0),
+            child: QuestionHeader(
+              questionNumber: currentQIndex + 1,
+              totalQuestions: totalQuestions,
+              progress: progress,
             ),
           ),
+          SizedBox(height: 24),
+          Expanded(
+            child: PageView.builder(
+              controller: _pageController,
+              physics: NeverScrollableScrollPhysics(),
+
+              itemCount: totalQuestions,
+              itemBuilder: (pageContext, index) {
+                final question = state.questions![index];
+                final questionNumber = index + 1;
+                return Padding(
+                  padding: EdgeInsets.fromLTRB(24, 0, 24, 24),
+                  child: Center(
+                    child: SingleChildScrollView(
+                      child: QuestionWidget(
+                        question: question,
+                        questionNumber: questionNumber,
+                        totalQuestions: totalQuestions,
+                        initialValue: state.answers.length > index
+                            ? state.answers[index]
+                            : 3,
+                        onChanged: (value) {
+                          _currentAnswer = value;
+                        },
+                      ),
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
+
+          _buildBottomBar(context, state),
         ],
       ),
     );
@@ -179,7 +152,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
                   style: OutlinedButton.styleFrom(
                     foregroundColor: Color(0xFF6C63FF),
                     side: BorderSide(color: Color(0xFF6C63FF)),
-                    padding: EdgeInsets.symmetric(vertical: 16),
+                    fixedSize: Size(200, 50),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(16),
                     ),
@@ -226,9 +199,9 @@ class _QuestionScreenState extends State<QuestionScreen> {
                   }
                 },
                 style: ElevatedButton.styleFrom(
+                  fixedSize: Size(200, 50),
                   backgroundColor: Color(0xFF6C63FF),
                   foregroundColor: Colors.white,
-                  padding: EdgeInsets.symmetric(vertical: 16),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16),
                   ),
