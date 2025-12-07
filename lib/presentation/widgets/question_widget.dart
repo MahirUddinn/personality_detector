@@ -162,115 +162,42 @@ class _QuestionWidgetState extends State<QuestionWidget> {
   Widget _buildScaleLabels() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Column(
-          children: [
-            Container(
-              width: 12,
-              height: 12,
-              decoration: BoxDecoration(
-                color: Colors.red,
-                shape: BoxShape.circle,
-              ),
-            ),
-            SizedBox(height: 4),
-            Text(
-              'Strongly\nDisagree',
-              style: TextStyle(
-                fontSize: 12,
-                color: Colors.grey,
-                fontWeight: FontWeight.w500,
-              ),
-              textAlign: TextAlign.center,
-            ),
-          ],
-        ),
-        Column(
-          children: [
-            Container(
-              width: 12,
-              height: 12,
-              decoration: BoxDecoration(
-                color: Colors.orange,
-                shape: BoxShape.circle,
-              ),
-            ),
-            SizedBox(height: 4),
-            Text(
-              'Disagree',
-              style: TextStyle(
-                fontSize: 12,
-                color: Colors.grey,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-          ],
-        ),
-        Column(
-          children: [
-            Container(
-              width: 12,
-              height: 12,
-              decoration: BoxDecoration(
-                color: Colors.yellow,
-                shape: BoxShape.circle,
-              ),
-            ),
-            SizedBox(height: 4),
-            Text(
-              'Neutral',
-              style: TextStyle(
-                fontSize: 12,
-                color: Colors.grey,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-          ],
-        ),
-        Column(
-          children: [
-            Container(
-              width: 12,
-              height: 12,
-              decoration: BoxDecoration(
-                color: Colors.lightGreen,
-                shape: BoxShape.circle,
-              ),
-            ),
-            SizedBox(height: 4),
-            Text(
-              'Agree',
-              style: TextStyle(
-                fontSize: 12,
-                color: Colors.grey,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-          ],
-        ),
-        Column(
-          children: [
-            Container(
-              width: 12,
-              height: 12,
-              decoration: BoxDecoration(
-                color: Colors.green,
-                shape: BoxShape.circle,
-              ),
-            ),
-            SizedBox(height: 4),
-            Text(
-              'Strongly\nAgree',
-              style: TextStyle(
-                fontSize: 12,
-                color: Colors.grey,
-                fontWeight: FontWeight.w500,
-              ),
-              textAlign: TextAlign.center,
-            ),
-          ],
-        ),
+        _buildLabelOption(Colors.red, 'Strongly\nDisagree', TextAlign.left),
+        _buildLabelOption(Colors.orange, 'Disagree', TextAlign.center),
+        _buildLabelOption(Colors.yellow, 'Neutral', TextAlign.center),
+        _buildLabelOption(Colors.lightGreen, 'Agree', TextAlign.center),
+        _buildLabelOption(Colors.green, 'Strongly\nAgree', TextAlign.right),
       ],
+    );
+  }
+
+  Widget _buildLabelOption(Color color, String text, TextAlign align) {
+    return Expanded(
+      child: Column(
+        children: [
+          Container(
+            width: 12,
+            height: 12,
+            decoration: BoxDecoration(color: color, shape: BoxShape.circle),
+          ),
+          SizedBox(height: 4),
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(
+              text,
+              style: TextStyle(
+                fontSize: 12,
+                color: Colors.grey,
+                fontWeight: FontWeight.w500,
+              ),
+              textAlign: align,
+              maxLines: 2,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

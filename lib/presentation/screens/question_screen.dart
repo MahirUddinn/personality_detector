@@ -190,6 +190,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
               SizedBox(width: 16),
             ],
             Expanded(
+              flex: 2,
               child: ElevatedButton(
                 onPressed: () async {
                   final cubit = context.read<QuizCubit>();
@@ -233,12 +234,16 @@ class _QuestionScreenState extends State<QuestionScreen> {
                   ),
                   elevation: 0,
                 ),
-                child: Text(
-                  (state.currentQuestionIndex ?? 0) ==
-                          (state.questions!.length - 1)
-                      ? 'Finish Quiz'
-                      : 'Next Question',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Text(
+                    (state.currentQuestionIndex ?? 0) ==
+                            (state.questions!.length - 1)
+                        ? 'Finish Quiz'
+                        : 'Next Question',
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                    maxLines: 1,
+                  ),
                 ),
               ),
             ),
