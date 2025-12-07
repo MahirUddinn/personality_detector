@@ -28,6 +28,7 @@ class QuestionHeader extends StatelessWidget {
          SizedBox(height: 8),
         Container(
           height: 8,
+          width: double.infinity,
           decoration: BoxDecoration(
             color: Colors.grey.shade200,
             borderRadius: BorderRadius.circular(4),

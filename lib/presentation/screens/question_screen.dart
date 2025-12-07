@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:personality_detector/presentation/cubit/quiz_cubit.dart';
 import 'package:personality_detector/presentation/screens/results_screen.dart';
+import 'package:personality_detector/presentation/widgets/calculating_view.dart';
+import 'package:personality_detector/presentation/widgets/error_view.dart';
+import 'package:personality_detector/presentation/widgets/loading_view.dart';
 import 'package:personality_detector/presentation/widgets/question_widget.dart';
 import '../widgets/question_header.dart';
 
@@ -13,12 +16,11 @@ class QuestionScreen extends StatefulWidget {
 }
 
 class _QuestionScreenState extends State<QuestionScreen> {
-  late PageController _pageController;
+  final PageController _pageController = PageController();
 
   @override
   void initState() {
     super.initState();
-    _pageController = PageController();
   }
 
   @override
@@ -34,15 +36,15 @@ class _QuestionScreenState extends State<QuestionScreen> {
       body: BlocBuilder<QuizCubit, QuizState>(
         builder: (context, state) {
           if (state.isQuizCompleted || state.isCalculatingResults) {
-            return _buildCalculatingScreen(state.totalQuestions);
+            return CalculatingView(totalQuestions: state.totalQuestions);
           }
 
           if (state.isLoading) {
-            return _buildLoadingState(state);
+            return LoadingView(state: state);
           }
 
           if (state.questions == null || state.questions!.isEmpty) {
-            return _buildErrorState(context);
+            return ErrorView(ctx: context);
           }
 
           return _buildPageViewUI(context, state);
@@ -51,120 +53,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
     );
   }
 
-  Widget _buildLoadingState(QuizState state) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          CircularProgressIndicator(
-            valueColor: AlwaysStoppedAnimation(Color(0xFF6C63FF)),
-          ),
-          SizedBox(height: 16),
-          Text(
-            'Loading ${state.totalQuestions} questions...',
-            style: TextStyle(fontSize: 14, color: Colors.grey.shade600),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildErrorState(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(Icons.error_outline, size: 64, color: Colors.red),
-          SizedBox(height: 16),
-          Text(
-            'Failed to load questions',
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-          ),
-          SizedBox(height: 8),
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: Text('Go Back'),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildCalculatingScreen(int totalQuestions) {
-    return Scaffold(
-      backgroundColor: Colors.grey.shade50,
-      body: Center(
-        child: Padding(
-          padding: EdgeInsets.all(24.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(
-                width: 100,
-                height: 100,
-                child: Stack(
-                  children: [
-                    Center(
-                      child: CircularProgressIndicator(
-                        valueColor: AlwaysStoppedAnimation(
-                          Color(0xFF6C63FF).withAlpha(77),
-                        ),
-                        strokeWidth: 8,
-                      ),
-                    ),
-                    Center(
-                      child: CircularProgressIndicator(
-                        valueColor: AlwaysStoppedAnimation(Color(0xFF6C63FF)),
-                        strokeWidth: 4,
-                      ),
-                    ),
-                    Center(
-                      child: Icon(
-                        Icons.psychology_outlined,
-                        size: 40,
-                        color: Color(0xFF6C63FF),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(height: 32),
-              Text(
-                'Calculating Your Results',
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xFF333333),
-                ),
-              ),
-              SizedBox(height: 16),
-              Text(
-                'Analyzing $totalQuestions responses...',
-                style: TextStyle(fontSize: 16, color: Colors.grey.shade600),
-                textAlign: TextAlign.center,
-              ),
-              SizedBox(height: 8),
-              Text(
-                'This may take a few moments',
-                style: TextStyle(fontSize: 14, color: Colors.grey.shade500),
-              ),
-              SizedBox(height: 32),
-              if (totalQuestions > 50)
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 40.0),
-                  child: LinearProgressIndicator(
-                    valueColor: AlwaysStoppedAnimation(Color(0xFF6C63FF)),
-                    backgroundColor: Colors.grey.shade200,
-                    minHeight: 8,
-                    borderRadius: BorderRadius.circular(4),
-                  ),
-                ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
+  int? _currentAnswer;
 
   Widget _buildPageViewUI(BuildContext context, QuizState state) {
     final totalQuestions = state.questions!.length;
@@ -181,107 +70,55 @@ class _QuestionScreenState extends State<QuestionScreen> {
       },
       child: Stack(
         children: [
-          Padding(
-            padding: EdgeInsets.only(top: 4.0),
-            child: PageView.builder(
-              controller: _pageController,
-              physics: NeverScrollableScrollPhysics(),
-              itemCount: totalQuestions,
-              itemBuilder: (pageContext, index) {
-                final question = state.questions![index];
-                final questionNumber = index + 1;
+          Column(
+            children: [
+              SizedBox(height: 20),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 24.0),
+                child: QuestionHeader(
+                  questionNumber: currentQIndex + 1,
+                  totalQuestions: totalQuestions,
+                  progress: progress,
+                ),
+              ),
+              SizedBox(height: 24),
+              Expanded(
+                child: PageView.builder(
+                  controller: _pageController,
+                  physics: NeverScrollableScrollPhysics(),
 
-                return Padding(
-                  padding: EdgeInsets.fromLTRB(24, 24, 24, 24),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(height: 8),
-                      QuestionHeader(
-                        questionNumber: questionNumber,
-                        totalQuestions: totalQuestions,
-                        progress: questionNumber / totalQuestions,
-                      ),
-                      SizedBox(height: 32),
-                      Expanded(
-                        child: QuestionWidget(
-                          question: question,
-                          questionNumber: questionNumber,
-                          totalQuestions: totalQuestions,
-                          initialValue: state.answers.length > index
-                              ? state.answers[index]
-                              : 3,
-                          onAnswered: (value) async {
-                            final cubit = context.read<QuizCubit>();
-
-                            await cubit.answer(value);
-
-                            if (!context.mounted) return;
-
-                            if (cubit.state.isQuizCompleted &&
-                                cubit.state.results != null) {
-                              Navigator.of(context).pushReplacement(
-                                MaterialPageRoute(
-                                  builder: (context) => ResultsScreen(
-                                    results: cubit.state.results!,
-                                  ),
-                                ),
-                              );
-                            } else {
-                              if (_pageController.hasClients) {
-                                _pageController.nextPage(
-                                  duration: Duration(milliseconds: 300),
-                                  curve: Curves.easeInOut,
-                                );
-                              }
-                            }
-                          },
-                        ),
-                      ),
-
-                      if (questionNumber > 1) ...[
-                        SizedBox(height: 16),
-                        SizedBox(
-                          width: double.infinity,
-                          height: 48,
-                          child: OutlinedButton(
-                            onPressed: () {
-                              context.read<QuizCubit>().goBack();
-                              if (_pageController.hasClients) {
-                                _pageController.previousPage(
-                                  duration: Duration(milliseconds: 300),
-                                  curve: Curves.easeInOut,
-                                );
-                              }
+                  itemCount: totalQuestions,
+                  itemBuilder: (pageContext, index) {
+                    final question = state.questions![index];
+                    final questionNumber = index + 1;
+                    return Padding(
+                      padding: EdgeInsets.fromLTRB(24, 0, 24, 24),
+                      child: Center(
+                        child: SingleChildScrollView(
+                          child: QuestionWidget(
+                            question: question,
+                            questionNumber: questionNumber,
+                            totalQuestions: totalQuestions,
+                            initialValue: state.answers.length > index
+                                ? state.answers[index]
+                                : 3,
+                            onChanged: (value) {
+                              _currentAnswer = value;
                             },
-                            style: OutlinedButton.styleFrom(
-                              foregroundColor: Color(0xFF6C63FF),
-                              side: BorderSide(color: Color(0xFF6C63FF)),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(16),
-                              ),
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(Icons.arrow_back, size: 20),
-                                SizedBox(width: 8),
-                                Text('Previous Question'),
-                              ],
-                            ),
                           ),
                         ),
-                      ],
-                    ],
-                  ),
-                );
-              },
-            ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+
+              _buildBottomBar(context, state),
+            ],
           ),
 
-          // Close Button
           Positioned(
-            top: 16,
+            top: 8,
             right: 16,
             child: IconButton(
               icon: Container(
@@ -303,6 +140,110 @@ class _QuestionScreenState extends State<QuestionScreen> {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildBottomBar(BuildContext context, QuizState state) {
+    final isFirstQuestion = (state.currentQuestionIndex ?? 0) == 0;
+
+    return Container(
+      padding: EdgeInsets.all(24),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withAlpha(20),
+            offset: Offset(0, -4),
+            blurRadius: 16,
+          ),
+        ],
+      ),
+      child: SafeArea(
+        child: Row(
+          children: [
+            if (!isFirstQuestion) ...[
+              Expanded(
+                flex: 1,
+                child: OutlinedButton(
+                  onPressed: () {
+                    _currentAnswer = null;
+                    context.read<QuizCubit>().goBack();
+                    if (_pageController.hasClients) {
+                      _pageController.previousPage(
+                        duration: Duration(milliseconds: 100),
+                        curve: Curves.easeInOut,
+                      );
+                    }
+                  },
+                  style: OutlinedButton.styleFrom(
+                    foregroundColor: Color(0xFF6C63FF),
+                    side: BorderSide(color: Color(0xFF6C63FF)),
+                    padding: EdgeInsets.symmetric(vertical: 16),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                  ),
+                  child: Icon(Icons.arrow_back),
+                ),
+              ),
+              SizedBox(width: 16),
+            ],
+            Expanded(
+              child: ElevatedButton(
+                onPressed: () async {
+                  final cubit = context.read<QuizCubit>();
+
+                  final currentIndex = state.currentQuestionIndex ?? 0;
+                  final answerToSubmit =
+                      _currentAnswer ??
+                      (state.answers.length > currentIndex
+                          ? state.answers[currentIndex]
+                          : 3);
+
+                  await cubit.answer(answerToSubmit);
+
+                  _currentAnswer = null;
+
+                  if (!context.mounted) return;
+
+                  if (cubit.state.isQuizCompleted &&
+                      cubit.state.results != null) {
+                    Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            ResultsScreen(results: cubit.state.results!),
+                      ),
+                    );
+                  } else {
+                    if (_pageController.hasClients) {
+                      _pageController.nextPage(
+                        duration: Duration(milliseconds: 100),
+                        curve: Curves.easeInOut,
+                      );
+                    }
+                  }
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Color(0xFF6C63FF),
+                  foregroundColor: Colors.white,
+                  padding: EdgeInsets.symmetric(vertical: 16),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  elevation: 0,
+                ),
+                child: Text(
+                  (state.currentQuestionIndex ?? 0) ==
+                          (state.questions!.length - 1)
+                      ? 'Finish Quiz'
+                      : 'Next Question',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
