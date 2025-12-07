@@ -5,7 +5,7 @@ import 'package:personality_detector/presentation/screens/question_screen.dart';
 import '../widgets/feature_chip.dart';
 
 class StartScreen extends StatelessWidget {
-  const StartScreen({super.key});
+   const StartScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,16 +17,16 @@ class StartScreen extends StatelessWidget {
             context: context,
             barrierDismissible: false,
             builder: (context) => AlertDialog(
-              title: const Text('Exit App?'),
-              content: const Text('Are you sure you want to exit the app?'),
+              title:  Text('Exit App?'),
+              content:  Text('Are you sure you want to exit the app?'),
               actions: [
                 TextButton(
                   onPressed: () => Navigator.pop(context, false),
-                  child: const Text('Cancel'),
+                  child:  Text('Cancel'),
                 ),
                 TextButton(
                   onPressed: () => Navigator.pop(context, true),
-                  child: const Text(
+                  child:  Text(
                     'Exit',
                     style: TextStyle(color: Colors.red),
                   ),
@@ -53,7 +53,7 @@ class StartScreen extends StatelessWidget {
           ),
           child: Center(
             child: Padding(
-              padding: const EdgeInsets.all(24.0),
+              padding:  EdgeInsets.all(24.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -72,14 +72,14 @@ class StartScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                    child: const Icon(
+                    child:  Icon(
                       Icons.psychology_outlined,
                       size: 60,
                       color: Color(0xFF6C63FF),
                     ),
                   ),
-                  const SizedBox(height: 40),
-                  const Text(
+                   SizedBox(height: 40),
+                   Text(
                     'Discover Your\nPersonality',
                     style: TextStyle(
                       fontSize: 36,
@@ -89,7 +89,7 @@ class StartScreen extends StatelessWidget {
                     ),
                     textAlign: TextAlign.center,
                   ),
-                  const SizedBox(height: 16),
+                   SizedBox(height: 16),
                   Text(
                     'Take this comprehensive personality test to uncover your MBTI type, Big Five traits, and more',
                     style: TextStyle(
@@ -99,22 +99,22 @@ class StartScreen extends StatelessWidget {
                     ),
                     textAlign: TextAlign.center,
                   ),
-                  const SizedBox(height: 60),
+                   SizedBox(height: 60),
                   Container(
                     width: double.infinity,
                     height: 60,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(30),
-                      gradient: const LinearGradient(
+                      gradient:  LinearGradient(
                         colors: [Color(0xFF6C63FF), Color(0xFF4A44C6)],
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
                       ),
                       boxShadow: [
                         BoxShadow(
-                          color: const Color(0xFF6C63FF).withAlpha(102),
+                          color:  Color(0xFF6C63FF).withAlpha(102),
                           blurRadius: 20,
-                          offset: const Offset(0, 10),
+                          offset:  Offset(0, 10),
                         ),
                       ],
                     ),
@@ -127,7 +127,7 @@ class StartScreen extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (_) => const QuestionScreen(),
+                              builder: (_) =>  QuestionScreen(),
                             ),
                           );
                         },
@@ -138,7 +138,7 @@ class StartScreen extends StatelessWidget {
                               BlocBuilder<QuizCubit, QuizState>(
                                 builder: (context, state) {
                                   if (state.isLoading) {
-                                    return const SizedBox(
+                                    return  SizedBox(
                                       width: 20,
                                       height: 20,
                                       child: CircularProgressIndicator(
@@ -147,7 +147,7 @@ class StartScreen extends StatelessWidget {
                                       ),
                                     );
                                   }
-                                  return const Text(
+                                  return  Text(
                                     'Start Quiz',
                                     style: TextStyle(
                                       fontSize: 18,
@@ -157,14 +157,14 @@ class StartScreen extends StatelessWidget {
                                   );
                                 },
                               ),
-                              const SizedBox(width: 12),
+                               SizedBox(width: 12),
                               Container(
-                                padding: const EdgeInsets.all(6),
+                                padding:  EdgeInsets.all(6),
                                 decoration: BoxDecoration(
                                   color: Colors.white.withAlpha(51),
                                   shape: BoxShape.circle,
                                 ),
-                                child: const Icon(
+                                child:  Icon(
                                   Icons.arrow_forward,
                                   size: 20,
                                   color: Colors.white,
@@ -176,7 +176,7 @@ class StartScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 24),
+                   SizedBox(height: 24),
                   Wrap(
                     spacing: 16,
                     runSpacing: 12,
@@ -245,7 +245,7 @@ class StartScreen extends StatelessWidget {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Close'),
+            child:  Text('Close'),
           ),
         ],
       ),

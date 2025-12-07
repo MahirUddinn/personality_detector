@@ -24,7 +24,8 @@ class ResultsScreen extends StatefulWidget {
   State<ResultsScreen> createState() => _ResultsScreenState();
 }
 
-class _ResultsScreenState extends State<ResultsScreen> with TickerProviderStateMixin {
+class _ResultsScreenState extends State<ResultsScreen>
+    with TickerProviderStateMixin {
   final GlobalKey _shareKey = GlobalKey();
   late List<AnimationController> _controllers;
   late List<Animation<double>> _animations;
@@ -36,15 +37,12 @@ class _ResultsScreenState extends State<ResultsScreen> with TickerProviderStateM
       4,
       (index) => AnimationController(
         vsync: this,
-        duration: const Duration(milliseconds: 600),
+        duration: Duration(milliseconds: 600),
       ),
     );
 
     _animations = _controllers.map((controller) {
-      return CurvedAnimation(
-        parent: controller,
-        curve: Curves.easeOut,
-      );
+      return CurvedAnimation(parent: controller, curve: Curves.easeOut);
     }).toList();
 
     for (int i = 0; i < _controllers.length; i++) {
@@ -72,16 +70,16 @@ class _ResultsScreenState extends State<ResultsScreen> with TickerProviderStateM
             context: context,
             barrierDismissible: false,
             builder: (context) => AlertDialog(
-              title: const Text('Go Back?'),
-              content: const Text('This will return you to the start screen.'),
+              title: Text('Go Back?'),
+              content: Text('This will return you to the start screen.'),
               actions: [
                 TextButton(
                   onPressed: () => Navigator.pop(context, false),
-                  child: const Text('Cancel'),
+                  child: Text('Cancel'),
                 ),
                 TextButton(
                   onPressed: () => Navigator.pop(context, true),
-                  child: const Text('OK'),
+                  child: Text('OK'),
                 ),
               ],
             ),
@@ -104,21 +102,21 @@ class _ResultsScreenState extends State<ResultsScreen> with TickerProviderStateM
           ),
           child: CustomScrollView(
             slivers: [
-              const ResultsHeader(),
+              ResultsHeader(),
               SliverPadding(
-                padding: const EdgeInsets.all(24.0),
+                padding: EdgeInsets.all(24.0),
                 sliver: SliverList(
                   delegate: SliverChildListDelegate([
                     RepaintBoundary(
                       key: _shareKey,
                       child: _buildShareableContent(),
                     ),
-                    const SizedBox(height: 40),
+                    SizedBox(height: 40),
                     ActionButtons(
                       onShare: _shareResults,
                       onSave: _saveToDevice,
                     ),
-                    const SizedBox(height: 20),
+                    SizedBox(height: 20),
                     _buildBackButton(context),
                   ]),
                 ),
@@ -132,7 +130,9 @@ class _ResultsScreenState extends State<ResultsScreen> with TickerProviderStateM
 
   Future<void> _shareResults() async {
     try {
-      final boundary = _shareKey.currentContext?.findRenderObject() as RenderRepaintBoundary?;
+      final boundary =
+          _shareKey.currentContext?.findRenderObject()
+              as RenderRepaintBoundary?;
       if (boundary == null) return;
 
       final image = await boundary.toImage(pixelRatio: 3.0);
@@ -143,22 +143,26 @@ class _ResultsScreenState extends State<ResultsScreen> with TickerProviderStateM
       final file = File('${directory.path}/personality_results.png');
       await file.writeAsBytes(byteData.buffer.asUint8List());
 
-      await Share.shareXFiles(
-        [XFile(file.path)],
-        text: 'Check out my personality test results!',
+      await SharePlus.instance.share(
+        ShareParams(
+          files: [XFile(file.path)],
+          text: 'Check out my personality test results!',
+        ),
       );
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to share: $e')),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Failed to share: $e')));
       }
     }
   }
 
   Future<void> _saveToDevice() async {
     try {
-      final boundary = _shareKey.currentContext?.findRenderObject() as RenderRepaintBoundary?;
+      final boundary =
+          _shareKey.currentContext?.findRenderObject()
+              as RenderRepaintBoundary?;
       if (boundary == null) return;
 
       final image = await boundary.toImage(pixelRatio: 3.0);
@@ -174,15 +178,15 @@ class _ResultsScreenState extends State<ResultsScreen> with TickerProviderStateM
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('Saved to ${file.path}'),
-            duration: const Duration(seconds: 3),
+            duration: Duration(seconds: 3),
           ),
         );
       }
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to save: $e')),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Failed to save: $e')));
       }
     }
   }
@@ -190,11 +194,11 @@ class _ResultsScreenState extends State<ResultsScreen> with TickerProviderStateM
   Widget _buildShareableContent() {
     return Container(
       color: Colors.white,
-      padding: const EdgeInsets.all(24.0),
+      padding: EdgeInsets.all(24.0),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Text(
+          Text(
             'My Personality Results',
             style: TextStyle(
               fontSize: 28,
@@ -202,19 +206,22 @@ class _ResultsScreenState extends State<ResultsScreen> with TickerProviderStateM
               color: Color(0xFF333333),
             ),
           ),
-          const SizedBox(height: 24),
-          _buildAnimatedCard(0, MbtiResultCard(mbtiType: widget.results.mbtiType)),
-          const SizedBox(height: 20),
+          SizedBox(height: 24),
+          _buildAnimatedCard(
+            0,
+            MbtiResultCard(mbtiType: widget.results.mbtiType),
+          ),
+          SizedBox(height: 20),
           _buildAnimatedCard(
             1,
             BigFiveResultCard(big5Percentages: widget.results.big5Percentages),
           ),
-          const SizedBox(height: 20),
+          SizedBox(height: 20),
           _buildAnimatedCard(
             2,
             EnneagramResultCard(enneagramType: widget.results.enneagramType),
           ),
-          const SizedBox(height: 20),
+          SizedBox(height: 20),
           _buildAnimatedCard(
             3,
             RaadsResultCard(
@@ -237,13 +244,13 @@ class _ResultsScreenState extends State<ResultsScreen> with TickerProviderStateM
           Navigator.of(context).popUntil((route) => route.isFirst);
         },
         style: OutlinedButton.styleFrom(
-          foregroundColor: const Color(0xFF6C63FF),
-          side: const BorderSide(color: Color(0xFF6C63FF)),
+          foregroundColor: Color(0xFF6C63FF),
+          side: BorderSide(color: Color(0xFF6C63FF)),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),
           ),
         ),
-        child: const Row(
+        child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(Icons.home, size: 20),
@@ -258,13 +265,10 @@ class _ResultsScreenState extends State<ResultsScreen> with TickerProviderStateM
   Widget _buildAnimatedCard(int index, Widget child) {
     return SlideTransition(
       position: Tween<Offset>(
-        begin: const Offset(0, 0.3),
+        begin: Offset(0, 0.3),
         end: Offset.zero,
       ).animate(_animations[index]),
-      child: FadeTransition(
-        opacity: _animations[index],
-        child: child,
-      ),
+      child: FadeTransition(opacity: _animations[index], child: child),
     );
   }
 }
