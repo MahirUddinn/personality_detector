@@ -15,104 +15,79 @@ class QuestionScreen extends StatefulWidget {
 }
 
 class _QuestionScreenState extends State<QuestionScreen> {
-  bool _isNavigatingToResults = false;
+  late PageController _pageController;
 
   @override
   void initState() {
     super.initState();
-    _isNavigatingToResults = false;
+    _pageController = PageController();
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey.shade50,
-      body: BlocListener<QuizCubit, QuizState>(
-        listenWhen: (previous, current) {
-          return current.isQuizCompleted && current.results != null;
+      body: BlocBuilder<QuizCubit, QuizState>(
+        builder: (context, state) {
+          if (state.isQuizCompleted || state.isCalculatingResults) {
+            return _buildCalculatingScreen(state.totalQuestions);
+          }
+
+          if (state.isLoading) {
+            return _buildLoadingState(state);
+          }
+
+          if (state.questions == null || state.questions!.isEmpty) {
+            return _buildErrorState(context);
+          }
+
+          return _buildPageViewUI(context, state);
         },
-        listener: (context, state) {
-          if (_isNavigatingToResults) return;
-          _isNavigatingToResults = true;
-          
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            if (context.mounted) {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => ResultsScreen(results: state.results!),
-                ),
-              );
-            }
-          });
-        },
-        child: BlocBuilder<QuizCubit, QuizState>(
-          builder: (context, state) {
-            if (state.isCalculatingResults) {
-              return _buildCalculatingScreen(state.totalQuestions);
-            }
+      ),
+    );
+  }
 
-            if (state.isQuizCompleted) {
-              return _buildCalculatingScreen(state.totalQuestions);
-            }
+  Widget _buildLoadingState(QuizState state) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const CircularProgressIndicator(
+            valueColor: AlwaysStoppedAnimation(Color(0xFF6C63FF)),
+          ),
+          const SizedBox(height: 16),
+          Text(
+            'Loading ${state.totalQuestions} questions...',
+            style: TextStyle(fontSize: 14, color: Colors.grey.shade600),
+          ),
+        ],
+      ),
+    );
+  }
 
-            if (state.isLoading) {
-              return Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const CircularProgressIndicator(
-                      valueColor: AlwaysStoppedAnimation(Color(0xFF6C63FF)),
-                    ),
-                    const SizedBox(height: 16),
-                    Text(
-                      'Loading ${state.totalQuestions} questions...',
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.grey.shade600,
-                      ),
-                    ),
-                  ],
-                ),
-              );
-            }
-
-            if (state.questions == null || state.questions!.isEmpty) {
-              return Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Icon(
-                      Icons.error_outline,
-                      size: 64,
-                      color: Colors.red,
-                    ),
-                    const SizedBox(height: 16),
-                    const Text(
-                      'Failed to load questions',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    TextButton(
-                      onPressed: () => Navigator.pop(context),
-                      child: const Text('Go Back'),
-                    ),
-                  ],
-                ),
-              );
-            }
-
-            if (state.currentQuestionIndex == null ||
-                state.currentQuestionIndex! >= state.questions!.length) {
-              return _buildCalculatingScreen(state.totalQuestions);
-            }
-
-            return _buildQuestionUI(context, state);
-          },
-        ),
+  Widget _buildErrorState(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Icon(Icons.error_outline, size: 64, color: Colors.red),
+          const SizedBox(height: 16),
+          const Text(
+            'Failed to load questions',
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 8),
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Go Back'),
+          ),
+        ],
       ),
     );
   }
@@ -193,11 +168,12 @@ class _QuestionScreenState extends State<QuestionScreen> {
     );
   }
 
-  Widget _buildQuestionUI(BuildContext context, QuizState state) {
-    final question = state.questions![state.currentQuestionIndex!];
-    final totalQuestions = state.questions!.length;
-    final questionNumber = state.currentQuestionIndex! + 1;
-    final progress = questionNumber / totalQuestions;
+  Widget _buildPageViewUI(BuildContext context, QuizState state) {
+    final questions = state.questions!;
+    final totalQuestions = questions.length;
+    final currentQIndex = state.currentQuestionIndex ?? 0;
+
+    final progress = (currentQIndex + 1) / totalQuestions;
 
     return PopScope(
       canPop: false,
@@ -208,6 +184,109 @@ class _QuestionScreenState extends State<QuestionScreen> {
       },
       child: Stack(
         children: [
+          Padding(
+            padding: const EdgeInsets.only(top: 4.0),
+            child: PageView.builder(
+              controller: _pageController,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: totalQuestions,
+              itemBuilder: (context, index) {
+                final question = questions[index];
+                final questionNumber = index + 1;
+
+                return Padding(
+                  padding: const EdgeInsets.fromLTRB(24, 24, 24, 24),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SizedBox(height: 8),
+                      QuestionHeader(
+                        questionNumber: questionNumber,
+                        totalQuestions: totalQuestions,
+                        progress: questionNumber / totalQuestions,
+                      ),
+                      const SizedBox(height: 32),
+                      Expanded(
+                        child: QuestionWidget(
+                          question: question,
+                          questionNumber: questionNumber,
+                          totalQuestions: totalQuestions,
+                          initialValue: state.answers.length > index
+                              ? state.answers[index]
+                              : 3,
+                          onAnswered: (value) async {
+                            final cubit = context.read<QuizCubit>();
+
+                            // 1. Update State
+                            await cubit.answer(value);
+
+                            if (!context.mounted) return;
+
+                            // 2. Check for Completion
+                            if (cubit.state.isQuizCompleted &&
+                                cubit.state.results != null) {
+                              Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                  builder: (context) => ResultsScreen(
+                                    results: cubit.state.results!,
+                                  ),
+                                ),
+                              );
+                            } else {
+                              // 3. Animate Next
+                              if (_pageController.hasClients) {
+                                _pageController.nextPage(
+                                  duration: const Duration(milliseconds: 300),
+                                  curve: Curves.easeInOut,
+                                );
+                              }
+                            }
+                          },
+                        ),
+                      ),
+
+                      // Previous Button
+                      if (questionNumber > 1) ...[
+                        const SizedBox(height: 16),
+                        SizedBox(
+                          width: double.infinity,
+                          height: 48,
+                          child: OutlinedButton(
+                            onPressed: () {
+                              context.read<QuizCubit>().goBack();
+                              if (_pageController.hasClients) {
+                                _pageController.previousPage(
+                                  duration: const Duration(milliseconds: 300),
+                                  curve: Curves.easeInOut,
+                                );
+                              }
+                            },
+                            style: OutlinedButton.styleFrom(
+                              foregroundColor: const Color(0xFF6C63FF),
+                              side: const BorderSide(color: Color(0xFF6C63FF)),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(16),
+                              ),
+                            ),
+                            child: const Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(Icons.arrow_back, size: 20),
+                                SizedBox(width: 8),
+                                Text('Previous Question'),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ],
+                  ),
+                );
+              },
+            ),
+          ),
+
+          // Progress Bar
           Positioned(
             top: 0,
             left: 0,
@@ -229,61 +308,8 @@ class _QuestionScreenState extends State<QuestionScreen> {
               ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(24.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                QuestionHeader(
-                  questionNumber: questionNumber,
-                  totalQuestions: totalQuestions,
-                  progress: progress,
-                ),
-                const SizedBox(height: 32),
-                Expanded(
-                  child: QuestionWidget(
-                    question: question,
-                    questionNumber: questionNumber,
-                    totalQuestions: totalQuestions,
-                    initialValue: state.answers.length > state.currentQuestionIndex!
-                        ? state.answers[state.currentQuestionIndex!]
-                        : 3,
-                    onAnswered: (value) {
-                      context.read<QuizCubit>().answer(value);
-                    },
-                  ),
-                ),
-                if (state.currentQuestionIndex! > 0)
-                  Padding(
-                    padding: const EdgeInsets.only(top: 16.0),
-                    child: SizedBox(
-                      width: double.infinity,
-                      height: 48,
-                      child: OutlinedButton(
-                        onPressed: () {
-                          context.read<QuizCubit>().goBack();
-                        },
-                        style: OutlinedButton.styleFrom(
-                          foregroundColor: const Color(0xFF6C63FF),
-                          side: const BorderSide(color: Color(0xFF6C63FF)),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(16),
-                          ),
-                        ),
-                        child: const Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(Icons.arrow_back, size: 20),
-                            SizedBox(width: 8),
-                            Text('Previous Question'),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-              ],
-            ),
-          ),
+
+          // Close Button
           Positioned(
             top: 16,
             right: 16,

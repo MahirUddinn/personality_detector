@@ -5,7 +5,7 @@ class QuestionHeader extends StatelessWidget {
   final int totalQuestions;
   final double progress;
 
-  const QuestionHeader({
+   const QuestionHeader({
     super.key,
     required this.questionNumber,
     required this.totalQuestions,
@@ -25,7 +25,7 @@ class QuestionHeader extends StatelessWidget {
             color: Colors.grey.shade600,
           ),
         ),
-        const SizedBox(height: 8),
+         SizedBox(height: 8),
         Container(
           height: 8,
           decoration: BoxDecoration(
@@ -37,7 +37,7 @@ class QuestionHeader extends StatelessWidget {
             widthFactor: progress,
             child: Container(
               decoration: BoxDecoration(
-                gradient: const LinearGradient(
+                gradient:  LinearGradient(
                   colors: [Color(0xFF6C63FF), Color(0xFF4A44C6)],
                 ),
                 borderRadius: BorderRadius.circular(4),
@@ -45,7 +45,7 @@ class QuestionHeader extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(height: 8),
+         SizedBox(height: 8),
         Text(
           '${(progress * 100).toStringAsFixed(0)}% complete',
           style: TextStyle(fontSize: 12, color: Colors.grey.shade500),

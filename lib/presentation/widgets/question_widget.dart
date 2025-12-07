@@ -8,7 +8,7 @@ class QuestionWidget extends StatefulWidget {
   final ValueChanged<int>? onAnswered;
   final int initialValue;
 
-  const QuestionWidget({
+   const QuestionWidget({
     super.key,
     required this.question,
     required this.questionNumber,
@@ -48,34 +48,34 @@ class _QuestionWidgetState extends State<QuestionWidget> {
           BoxShadow(
             color: Colors.grey.withAlpha(26),
             blurRadius: 30,
-            offset: const Offset(0, 10),
+            offset:  Offset(0, 10),
           ),
         ],
       ),
       child: Padding(
-        padding: const EdgeInsets.all(32.0),
+        padding:  EdgeInsets.all(32.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              padding:  EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               decoration: BoxDecoration(
-                color: const Color(0xFF6C63FF).withAlpha(26),
+                color:  Color(0xFF6C63FF).withAlpha(26),
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Text(
                 'Question ${widget.questionNumber}',
-                style: const TextStyle(
+                style:  TextStyle(
                   color: Color(0xFF6C63FF),
                   fontWeight: FontWeight.w600,
                   fontSize: 14,
                 ),
               ),
             ),
-            const SizedBox(height: 32),
+             SizedBox(height: 32),
             Text(
               widget.question.text,
-              style: const TextStyle(
+              style:  TextStyle(
                 fontSize: 22,
                 fontWeight: FontWeight.w500,
                 color: Color(0xFF333333),
@@ -83,11 +83,11 @@ class _QuestionWidgetState extends State<QuestionWidget> {
               ),
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: 48),
+             SizedBox(height: 48),
             _buildSlider(),
-            const SizedBox(height: 32),
+             SizedBox(height: 32),
             _buildScaleLabels(),
-            const SizedBox(height: 48),
+             SizedBox(height: 48),
             SizedBox(
               width: double.infinity,
               height: 56,
@@ -96,7 +96,7 @@ class _QuestionWidgetState extends State<QuestionWidget> {
                   widget.onAnswered!(_sliderValue.round());
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF6C63FF),
+                  backgroundColor:  Color(0xFF6C63FF),
                   foregroundColor: Colors.white,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16),
@@ -104,7 +104,7 @@ class _QuestionWidgetState extends State<QuestionWidget> {
                   elevation: 0,
                   shadowColor: Colors.transparent,
                 ),
-                child: const Row(
+                child:  Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
@@ -133,11 +133,11 @@ class _QuestionWidgetState extends State<QuestionWidget> {
           width: 60,
           height: 60,
           decoration: BoxDecoration(
-            color: const Color(0xFF6C63FF),
+            color:  Color(0xFF6C63FF),
             shape: BoxShape.circle,
             boxShadow: [
               BoxShadow(
-                color: const Color(0xFF6C63FF).withAlpha(77),
+                color:  Color(0xFF6C63FF).withAlpha(77),
                 blurRadius: 15,
                 spreadRadius: 2,
               ),
@@ -146,7 +146,7 @@ class _QuestionWidgetState extends State<QuestionWidget> {
           child: Center(
             child: Text(
               _sliderValue.round().toString(),
-              style: const TextStyle(
+              style:  TextStyle(
                 fontSize: 22,
                 fontWeight: FontWeight.bold,
                 color: Colors.white,
@@ -154,22 +154,22 @@ class _QuestionWidgetState extends State<QuestionWidget> {
             ),
           ),
         ),
-        const SizedBox(height: 24),
+         SizedBox(height: 24),
         SliderTheme(
           data: SliderThemeData(
             trackHeight: 8,
-            thumbShape: const RoundSliderThumbShape(
+            thumbShape:  RoundSliderThumbShape(
               enabledThumbRadius: 16,
               elevation: 4,
             ),
-            overlayShape: const RoundSliderOverlayShape(overlayRadius: 28),
-            activeTrackColor: const Color(0xFF6C63FF),
+            overlayShape:  RoundSliderOverlayShape(overlayRadius: 28),
+            activeTrackColor:  Color(0xFF6C63FF),
             inactiveTrackColor: Colors.grey.shade300,
             thumbColor: Colors.white,
-            overlayColor: const Color(0xFF6C63FF).withAlpha(51),
-            valueIndicatorShape: const PaddleSliderValueIndicatorShape(),
-            valueIndicatorColor: const Color(0xFF6C63FF),
-            valueIndicatorTextStyle: const TextStyle(
+            overlayColor:  Color(0xFF6C63FF).withAlpha(51),
+            valueIndicatorShape:  PaddleSliderValueIndicatorShape(),
+            valueIndicatorColor:  Color(0xFF6C63FF),
+            valueIndicatorTextStyle:  TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.bold,
             ),
@@ -195,20 +195,18 @@ class _QuestionWidgetState extends State<QuestionWidget> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        // For 1-5 scale, we can adjust labels if needed or keep 5 labels.
-        // Assuming 5 labels (Strongly Disagree, Disagree, Neutral, Agree, Strongly Agree) fit perfectly for 1, 2, 3, 4, 5.
         Column(
           children: [
             Container(
               width: 12,
               height: 12,
-              decoration: const BoxDecoration(
+              decoration:  BoxDecoration(
                 color: Colors.red,
                 shape: BoxShape.circle,
               ),
             ),
-            const SizedBox(height: 4),
-            const Text(
+             SizedBox(height: 4),
+             Text(
               'Strongly\nDisagree',
               style: TextStyle(
                 fontSize: 12,
@@ -224,13 +222,13 @@ class _QuestionWidgetState extends State<QuestionWidget> {
             Container(
               width: 12,
               height: 12,
-              decoration: const BoxDecoration(
+              decoration:  BoxDecoration(
                 color: Colors.orange,
                 shape: BoxShape.circle,
               ),
             ),
-            const SizedBox(height: 4),
-            const Text(
+             SizedBox(height: 4),
+             Text(
               'Disagree',
               style: TextStyle(
                 fontSize: 12,
@@ -245,13 +243,13 @@ class _QuestionWidgetState extends State<QuestionWidget> {
             Container(
               width: 12,
               height: 12,
-              decoration: const BoxDecoration(
+              decoration:  BoxDecoration(
                 color: Colors.yellow,
                 shape: BoxShape.circle,
               ),
             ),
-            const SizedBox(height: 4),
-            const Text(
+             SizedBox(height: 4),
+             Text(
               'Neutral',
               style: TextStyle(
                 fontSize: 12,
@@ -266,13 +264,13 @@ class _QuestionWidgetState extends State<QuestionWidget> {
             Container(
               width: 12,
               height: 12,
-              decoration: const BoxDecoration(
+              decoration:  BoxDecoration(
                 color: Colors.lightGreen,
                 shape: BoxShape.circle,
               ),
             ),
-            const SizedBox(height: 4),
-            const Text(
+             SizedBox(height: 4),
+             Text(
               'Agree',
               style: TextStyle(
                 fontSize: 12,
@@ -287,13 +285,13 @@ class _QuestionWidgetState extends State<QuestionWidget> {
             Container(
               width: 12,
               height: 12,
-              decoration: const BoxDecoration(
+              decoration:  BoxDecoration(
                 color: Colors.green,
                 shape: BoxShape.circle,
               ),
             ),
-            const SizedBox(height: 4),
-            const Text(
+             SizedBox(height: 4),
+             Text(
               'Strongly\nAgree',
               style: TextStyle(
                 fontSize: 12,

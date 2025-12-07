@@ -5,7 +5,7 @@ class FeatureChip extends StatelessWidget {
   final String text;
   final VoidCallback? onTap;
 
-  const FeatureChip({
+   const FeatureChip({
     super.key,
     this.icon,
     required this.text,
@@ -22,7 +22,7 @@ class FeatureChip extends StatelessWidget {
           BoxShadow(
             color: Colors.grey.withAlpha(26),
             blurRadius: 10,
-            offset: const Offset(0, 4),
+            offset:  Offset(0, 4),
           ),
         ],
       ),
@@ -32,17 +32,17 @@ class FeatureChip extends StatelessWidget {
           onTap: onTap,
           borderRadius: BorderRadius.circular(20),
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            padding:  EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
                 if (icon != null) ...[
-                  Icon(icon!, size: 16, color: const Color(0xFF6C63FF)),
-                  const SizedBox(width: 6),
+                  Icon(icon!, size: 16, color:  Color(0xFF6C63FF)),
+                   SizedBox(width: 6),
                 ],
                 Text(
                   text,
-                  style: const TextStyle(
+                  style:  TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.w500,
                     color: Color(0xFF666666),

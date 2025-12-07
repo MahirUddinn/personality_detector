@@ -44,6 +44,13 @@ class QuizCubit extends Cubit<QuizState> {
     emit(const QuizState());
   }
 
+  void setIndex(int index) {
+    if (index >= 0 && index < _questions.length) {
+      _currentIndex = index;
+      emit(state.copyWith(currentQuestionIndex: _currentIndex));
+    }
+  }
+
   void goBack() {
     if (_currentIndex > 0) {
       _currentIndex--;
@@ -65,10 +72,12 @@ class QuizCubit extends Cubit<QuizState> {
     _currentIndex++;
 
     if (_currentIndex < _questions.length) {
-      emit(state.copyWith(
-        currentQuestionIndex: _currentIndex,
-        answers: List.from(_answers),
-      ));
+      emit(
+        state.copyWith(
+          currentQuestionIndex: _currentIndex,
+          answers: List.from(_answers),
+        ),
+      );
     } else {
       emit(
         state.copyWith(
