@@ -119,9 +119,3 @@ This approach ensures **Low coupling**, **High testability**, and **Ease of main
 **Mahir Uddin**
 - GitHub: [@MahirUddinn](https://github.com/MahirUddinn)
 - LinkedIn: [Mahir Uddin](https://www.linkedin.com/in/mahir-uddin)
-
----
-
-<div align="center">
-  <sub>Built with ❤️ using Flutter</sub>
-</div>
