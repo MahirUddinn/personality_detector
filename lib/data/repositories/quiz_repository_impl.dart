@@ -6,8 +6,10 @@ import 'package:personality_detector/domain/repositories/quiz_repository.dart';
 class QuizRepositoryImpl implements QuizRepository {
   @override
   Future<List<Question>> getQuestions() async {
-    final jsonString = await rootBundle.loadString('assets/questions_120.json');
+    final jsonString = await rootBundle.loadString('assets/questions_80_revised.json');
     final List<dynamic> jsonList = json.decode(jsonString);
-    return jsonList.map((json) => Question.fromJson(json)).toList();
+    final questions = jsonList.map((json) => Question.fromJson(json)).toList();
+    questions.shuffle();
+    return questions;
   }
 }

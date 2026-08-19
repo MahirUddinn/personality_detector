@@ -1,0 +1,714 @@
+[
+  {
+    "id": 1,
+    "text": "I feel more energized after spending time with a group than after time alone.",
+    "mbti": {
+      "E": 2.5,
+      "I": -2.5
+    },
+    "big5": {
+      "extraversion": 2.0
+    }
+  },
+  {
+    "id": 2,
+    "text": "I process my thoughts best by talking them through out loud with other people.",
+    "mbti": {
+      "E": 2.0
+    },
+    "big5": {
+      "extraversion": 1.5
+    }
+  },
+  {
+    "id": 3,
+    "text": "I enjoy striking up conversations with strangers while waiting in line or at events.",
+    "mbti": {
+      "E": 2.5
+    },
+    "big5": {
+      "extraversion": 2.0
+    }
+  },
+  {
+    "id": 4,
+    "text": "I need real alone time to recharge after socializing, even with people I enjoy.",
+    "mbti": {
+      "I": 2.5,
+      "E": -2.5
+    },
+    "big5": {
+      "extraversion": -2.0
+    }
+  },
+  {
+    "id": 5,
+    "text": "I'd rather draft my thoughts privately before sharing them than think out loud in a group.",
+    "mbti": {
+      "I": 2.0
+    },
+    "big5": {
+      "extraversion": -1.0
+    }
+  },
+  {
+    "id": 6,
+    "text": "A quiet evening with one close friend appeals to me far more than a big party.",
+    "mbti": {
+      "I": 2.0
+    },
+    "big5": {
+      "extraversion": -1.5
+    }
+  },
+  {
+    "id": 7,
+    "text": "I trust what I can directly observe or experience over abstract theory.",
+    "mbti": {
+      "S": 2.5,
+      "N": -2.5
+    },
+    "big5": {
+      "openness": -1.5
+    }
+  },
+  {
+    "id": 8,
+    "text": "I'm more interested in the practical details of a plan than its big-picture concept.",
+    "mbti": {
+      "S": 2.0
+    },
+    "big5": {
+      "openness": -1.0
+    }
+  },
+  {
+    "id": 9,
+    "text": "I'd rather follow a proven method than improvise my own approach to a task.",
+    "mbti": {
+      "S": 2.0
+    },
+    "big5": {
+      "openness": -1.0
+    }
+  },
+  {
+    "id": 10,
+    "text": "I'm drawn to abstract ideas and future possibilities more than present, concrete facts.",
+    "mbti": {
+      "N": 2.5,
+      "S": -2.5
+    },
+    "big5": {
+      "openness": 2.0
+    }
+  },
+  {
+    "id": 11,
+    "text": "I regularly find myself imagining how things could be, rather than focusing on how they are.",
+    "mbti": {
+      "N": 2.0
+    },
+    "big5": {
+      "openness": 1.5
+    }
+  },
+  {
+    "id": 12,
+    "text": "I enjoy spotting patterns that connect ideas from completely different fields.",
+    "mbti": {
+      "N": 2.5
+    },
+    "big5": {
+      "openness": 2.0
+    }
+  },
+  {
+    "id": 13,
+    "text": "When making a decision, I weigh logic and consistency above how it will make people feel.",
+    "mbti": {
+      "T": 3.0,
+      "F": -3.0
+    },
+    "big5": {
+      "agreeableness": -1.5
+    }
+  },
+  {
+    "id": 14,
+    "text": "I'd rather give someone an honest, critical assessment than a comforting but vague one.",
+    "mbti": {
+      "T": 2.0
+    },
+    "big5": {
+      "agreeableness": -1.5
+    }
+  },
+  {
+    "id": 15,
+    "text": "I evaluate arguments on their merits, not on who is making them or how they're delivered.",
+    "mbti": {
+      "T": 2.0
+    },
+    "big5": {
+      "agreeableness": -0.5
+    }
+  },
+  {
+    "id": 16,
+    "text": "When making a decision, how it affects the people involved matters more to me than strict logic.",
+    "mbti": {
+      "F": 3.0,
+      "T": -3.0
+    },
+    "big5": {
+      "agreeableness": 2.0
+    }
+  },
+  {
+    "id": 17,
+    "text": "I naturally consider people's feelings before I consider being right.",
+    "mbti": {
+      "F": 2.0
+    },
+    "big5": {
+      "agreeableness": 2.0
+    }
+  },
+  {
+    "id": 18,
+    "text": "I find it hard to stay detached when someone I care about is upset.",
+    "mbti": {
+      "F": 2.0
+    },
+    "big5": {
+      "agreeableness": 1.0,
+      "neuroticism": 1.0
+    }
+  },
+  {
+    "id": 19,
+    "text": "I like to have things decided and settled well ahead of time.",
+    "mbti": {
+      "J": 3.0,
+      "P": -3.0
+    },
+    "big5": {
+      "conscientiousness": 2.0
+    }
+  },
+  {
+    "id": 20,
+    "text": "I keep a to-do list or schedule and feel uneasy when I fall behind on it.",
+    "mbti": {
+      "J": 2.5
+    },
+    "big5": {
+      "conscientiousness": 2.0
+    }
+  },
+  {
+    "id": 21,
+    "text": "I prefer closing out one task fully before starting another.",
+    "mbti": {
+      "J": 2.0
+    },
+    "big5": {
+      "conscientiousness": 1.5
+    }
+  },
+  {
+    "id": 22,
+    "text": "I like to keep my options open rather than lock in a plan too early.",
+    "mbti": {
+      "P": 3.0,
+      "J": -3.0
+    },
+    "big5": {
+      "conscientiousness": -2.0
+    }
+  },
+  {
+    "id": 23,
+    "text": "I work best under a looming deadline rather than a steady early schedule.",
+    "mbti": {
+      "P": 2.0
+    },
+    "big5": {
+      "conscientiousness": -1.5
+    }
+  },
+  {
+    "id": 24,
+    "text": "I enjoy jumping between several projects at once rather than finishing one before starting the next.",
+    "mbti": {
+      "P": 2.0
+    },
+    "big5": {
+      "conscientiousness": -1.5
+    }
+  },
+  {
+    "id": 25,
+    "text": "I tend to take the lead and speak up first in group settings.",
+    "big5": {
+      "extraversion": 2.5
+    }
+  },
+  {
+    "id": 26,
+    "text": "I can go a full day without talking to anyone and not feel bothered by it.",
+    "big5": {
+      "extraversion": -2.0
+    }
+  },
+  {
+    "id": 27,
+    "text": "I actively seek out art, music, or ideas that are unconventional or experimental.",
+    "big5": {
+      "openness": 2.5
+    }
+  },
+  {
+    "id": 28,
+    "text": "I enjoy questioning my own long-held beliefs when presented with a good counter-argument.",
+    "big5": {
+      "openness": 2.0
+    }
+  },
+  {
+    "id": 29,
+    "text": "I prefer familiar routines and tested approaches over novel, untested ones.",
+    "big5": {
+      "openness": -2.0
+    }
+  },
+  {
+    "id": 30,
+    "text": "I keep my living or work space organized without having to force myself.",
+    "big5": {
+      "conscientiousness": 2.5
+    }
+  },
+  {
+    "id": 31,
+    "text": "I follow through on commitments even when my initial motivation has faded.",
+    "big5": {
+      "conscientiousness": 2.5
+    }
+  },
+  {
+    "id": 32,
+    "text": "I often start tasks with good intentions but lose steam before finishing them.",
+    "big5": {
+      "conscientiousness": -2.0
+    }
+  },
+  {
+    "id": 33,
+    "text": "I double-check my work carefully before considering it done.",
+    "big5": {
+      "conscientiousness": 2.0
+    }
+  },
+  {
+    "id": 34,
+    "text": "I go out of my way to avoid inconveniencing other people.",
+    "big5": {
+      "agreeableness": 2.0
+    }
+  },
+  {
+    "id": 35,
+    "text": "I generally assume people have good intentions unless proven otherwise.",
+    "big5": {
+      "agreeableness": 2.0
+    }
+  },
+  {
+    "id": 36,
+    "text": "I find it satisfying to win an argument, even at the cost of the other person's feelings.",
+    "big5": {
+      "agreeableness": -2.5
+    }
+  },
+  {
+    "id": 37,
+    "text": "I forgive people relatively quickly, even after a real conflict.",
+    "big5": {
+      "agreeableness": 2.0
+    }
+  },
+  {
+    "id": 38,
+    "text": "I'd rather negotiate hard for my own interests than compromise for the sake of harmony.",
+    "big5": {
+      "agreeableness": -2.0
+    }
+  },
+  {
+    "id": 39,
+    "text": "I find myself replaying embarrassing moments long after they happened.",
+    "big5": {
+      "neuroticism": 2.5
+    }
+  },
+  {
+    "id": 40,
+    "text": "Small setbacks can put me in a bad mood for the rest of the day.",
+    "big5": {
+      "neuroticism": 2.0
+    }
+  },
+  {
+    "id": 41,
+    "text": "I generally stay calm and level-headed, even when things go wrong.",
+    "big5": {
+      "neuroticism": -2.5
+    }
+  },
+  {
+    "id": 42,
+    "text": "I worry about things going badly even when there's no clear evidence they will.",
+    "big5": {
+      "neuroticism": 2.5
+    }
+  },
+  {
+    "id": 43,
+    "text": "My mood tends to be steady and doesn't swing much from day to day.",
+    "big5": {
+      "neuroticism": -2.0
+    }
+  },
+  {
+    "id": 44,
+    "text": "I feel anxious in situations where I don't know what's expected of me.",
+    "big5": {
+      "neuroticism": 2.0
+    }
+  },
+  {
+    "id": 45,
+    "text": "I hold myself to a strict internal standard of what's right, and I feel guilty when I fall short of it.",
+    "big5": {
+      "conscientiousness": 1.5
+    },
+    "enneagram": {
+      "1": 3.0
+    }
+  },
+  {
+    "id": 46,
+    "text": "I notice flaws and inefficiencies that others overlook, and I feel compelled to correct them.",
+    "big5": {
+      "conscientiousness": 1.0
+    },
+    "enneagram": {
+      "1": 2.5
+    }
+  },
+  {
+    "id": 47,
+    "text": "I feel most valuable when I'm taking care of other people's needs.",
+    "big5": {
+      "agreeableness": 1.5
+    },
+    "enneagram": {
+      "2": 3.0
+    }
+  },
+  {
+    "id": 48,
+    "text": "I have a hard time asking for help, even though I'm quick to offer it to others.",
+    "big5": {
+      "agreeableness": 1.0
+    },
+    "enneagram": {
+      "2": 2.5
+    }
+  },
+  {
+    "id": 49,
+    "text": "I adjust how I present myself depending on what will earn approval or admiration.",
+    "big5": {
+      "extraversion": 1.0
+    },
+    "enneagram": {
+      "3": 2.5
+    }
+  },
+  {
+    "id": 50,
+    "text": "Being seen as successful matters to me more than most people would guess.",
+    "big5": {
+      "conscientiousness": 1.0
+    },
+    "enneagram": {
+      "3": 3.0
+    }
+  },
+  {
+    "id": 51,
+    "text": "I feel like there's something fundamentally different about me compared to most people.",
+    "big5": {
+      "neuroticism": 1.5
+    },
+    "enneagram": {
+      "4": 3.0
+    }
+  },
+  {
+    "id": 52,
+    "text": "I'm drawn to depth and emotional intensity, and ordinary small talk feels hollow to me.",
+    "big5": {
+      "openness": 1.0
+    },
+    "enneagram": {
+      "4": 2.5
+    }
+  },
+  {
+    "id": 53,
+    "text": "I'd rather understand something thoroughly on my own than rely on others to explain it.",
+    "big5": {
+      "openness": 1.0
+    },
+    "enneagram": {
+      "5": 3.0
+    }
+  },
+  {
+    "id": 54,
+    "text": "I protect my time and energy carefully, and I resent demands that feel intrusive.",
+    "big5": {
+      "extraversion": -1.0
+    },
+    "enneagram": {
+      "5": 2.5
+    }
+  },
+  {
+    "id": 55,
+    "text": "I tend to anticipate what could go wrong before I commit to something.",
+    "big5": {
+      "neuroticism": 1.5
+    },
+    "enneagram": {
+      "6": 3.0
+    }
+  },
+  {
+    "id": 56,
+    "text": "I value loyalty and consistency in relationships, and I test whether people will really show up.",
+    "big5": {
+      "neuroticism": 1.0
+    },
+    "enneagram": {
+      "6": 2.5
+    }
+  },
+  {
+    "id": 57,
+    "text": "I keep my options and plans open because I hate the idea of missing out on something better.",
+    "big5": {
+      "openness": 1.0
+    },
+    "enneagram": {
+      "7": 3.0
+    }
+  },
+  {
+    "id": 58,
+    "text": "I distract myself with new activities or ideas rather than sit with uncomfortable feelings.",
+    "big5": {
+      "neuroticism": -1.0
+    },
+    "enneagram": {
+      "7": 2.5
+    }
+  },
+  {
+    "id": 59,
+    "text": "I speak my mind directly and don't back down easily once I've taken a position.",
+    "big5": {
+      "agreeableness": -1.5
+    },
+    "enneagram": {
+      "8": 3.0
+    }
+  },
+  {
+    "id": 60,
+    "text": "I have a strong instinct to protect people I care about, even if it means confrontation.",
+    "big5": {
+      "agreeableness": -0.5
+    },
+    "enneagram": {
+      "8": 2.5
+    }
+  },
+  {
+    "id": 61,
+    "text": "I go along with what others want in order to keep the peace, even when I have a preference.",
+    "big5": {
+      "agreeableness": 1.5
+    },
+    "enneagram": {
+      "9": 3.0
+    }
+  },
+  {
+    "id": 62,
+    "text": "It's hard for me to identify what I actually want when other people's preferences are in the room.",
+    "big5": {
+      "neuroticism": 0.5
+    },
+    "enneagram": {
+      "9": 2.5
+    }
+  },
+  {
+    "id": 63,
+    "text": "I take what people say literally and often miss sarcasm or implied meaning.",
+    "raads": {
+      "language": 3.0
+    }
+  },
+  {
+    "id": 64,
+    "text": "People have told me my tone of voice doesn't always match what I'm feeling or saying.",
+    "raads": {
+      "language": 2.5
+    }
+  },
+  {
+    "id": 65,
+    "text": "I find myself talking at length about a topic without noticing whether the other person is still interested.",
+    "raads": {
+      "language": 2.5,
+      "social_relatedness": 1.0
+    }
+  },
+  {
+    "id": 66,
+    "text": "I sometimes use words or phrases in a way that others find unusual or overly formal.",
+    "raads": {
+      "language": 2.5
+    }
+  },
+  {
+    "id": 67,
+    "text": "I find it genuinely hard to know what response is expected of me in a social situation.",
+    "raads": {
+      "social_relatedness": 3.0
+    }
+  },
+  {
+    "id": 68,
+    "text": "I have to consciously work out social rules that seem to come naturally to other people.",
+    "big5": {
+      "neuroticism": 0.5
+    },
+    "raads": {
+      "social_relatedness": 2.5
+    }
+  },
+  {
+    "id": 69,
+    "text": "I struggle to tell when someone wants to end a conversation.",
+    "raads": {
+      "social_relatedness": 2.5
+    }
+  },
+  {
+    "id": 70,
+    "text": "Making eye contact during conversation feels uncomfortable or effortful to me.",
+    "raads": {
+      "social_relatedness": 2.5
+    }
+  },
+  {
+    "id": 71,
+    "text": "I've been told I come across as blunt or insensitive, even when I didn't mean to.",
+    "raads": {
+      "social_relatedness": 2.0
+    }
+  },
+  {
+    "id": 72,
+    "text": "Certain sounds, lights, or textures are distracting or uncomfortable to me in a way that doesn't seem to bother other people.",
+    "raads": {
+      "sensory_motor": 3.0
+    }
+  },
+  {
+    "id": 73,
+    "text": "I'm often described as clumsy or physically awkward.",
+    "raads": {
+      "sensory_motor": 2.0
+    }
+  },
+  {
+    "id": 74,
+    "text": "I engage in repetitive movements, like tapping, rocking, or pacing, when I'm stressed or concentrating.",
+    "big5": {
+      "neuroticism": 0.5
+    },
+    "raads": {
+      "sensory_motor": 2.5
+    }
+  },
+  {
+    "id": 75,
+    "text": "Crowded, loud environments quickly become overwhelming for me.",
+    "big5": {
+      "neuroticism": 1.0
+    },
+    "raads": {
+      "sensory_motor": 2.5,
+      "social_relatedness": 0.5
+    }
+  },
+  {
+    "id": 76,
+    "text": "I don't always notice hunger, pain, or tiredness until it becomes hard to ignore.",
+    "raads": {
+      "sensory_motor": 3.0
+    }
+  },
+  {
+    "id": 77,
+    "text": "I have one or two topics I could talk about in great depth for hours.",
+    "raads": {
+      "circumscribed_interests": 3.0
+    }
+  },
+  {
+    "id": 78,
+    "text": "I get so absorbed in something I'm interested in that I lose track of time or forget to eat.",
+    "big5": {
+      "conscientiousness": -1.0
+    },
+    "raads": {
+      "circumscribed_interests": 2.5
+    }
+  },
+  {
+    "id": 79,
+    "text": "Unexpected changes to my plans or routine are more distressing to me than they seem to be for others.",
+    "big5": {
+      "neuroticism": 1.0
+    },
+    "raads": {
+      "circumscribed_interests": 2.5
+    }
+  },
+  {
+    "id": 80,
+    "text": "I collect detailed knowledge about specific subjects, well beyond what's practically useful.",
+    "raads": {
+      "circumscribed_interests": 2.5
+    }
+  }
+]

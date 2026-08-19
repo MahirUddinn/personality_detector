@@ -7,18 +7,25 @@ part 'question.g.dart';
 class Question extends Equatable {
   final int id;
   final String text;
+  @JsonKey(defaultValue: <String, double>{})
   final Map<String, double> mbti;
+  
+  @JsonKey(defaultValue: <String, double>{})
   final Map<String, double> big5;
+  
+  @JsonKey(defaultValue: <String, double>{})
   final Map<String, double> enneagram;
+  
+  @JsonKey(defaultValue: <String, double>{})
   final Map<String, double> raads;
 
   const Question({
     required this.id,
     required this.text,
-    required this.mbti,
-    required this.big5,
-    required this.enneagram,
-    required this.raads,
+    this.mbti = const {},
+    this.big5 = const {},
+    this.enneagram = const {},
+    this.raads = const {},
   });
 
   factory Question.fromJson(Map<String, dynamic> json) =>
